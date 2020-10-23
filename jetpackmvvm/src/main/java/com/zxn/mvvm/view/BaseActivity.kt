@@ -1,27 +1,29 @@
 package com.zxn.mvvm.view
 
-import android.content.Context
+import BaseViewModel
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
-import com.zxn.mvvm.BaseApp
 import com.zxn.mvvm.R
 import com.zxn.mvvm.ext.getVmClazz
-import com.zxn.mvvm.presenter.IView
-import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
-import org.greenrobot.eventbus.EventBus
+import com.zxn.utils.UIUtils
+import java.lang.reflect.ParameterizedType
 
 /**
- * Updated by zxn on 2020/10/9.
+ *  Updated by zxn on 2020/10/23.
  */
-abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
+abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView, ILoadingView {
 
     lateinit var mViewModel: VM
+    override var cancelable: Boolean = true
+    override lateinit var mContext: AppCompatActivity
+    override var usedEventBus: Boolean = false
 
-    var mContext: Context? = null
+
+//    lateinit var mContext: AppCompatActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,19 +32,25 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
             setContentView(layoutResId)
         }
         onInitImmersionBar()
-        regEventBus()
-        mViewModel = createViewModel()
+        if (usedEventBus) {
+            registerEventBus(true)
+        }
+
+        if (this.javaClass.genericSuperclass is ParameterizedType){
+            mViewModel = createViewModel()
+        }
+        createObserver()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        unRegEventBus()
+        registerEventBus(false)
     }
 
     /**
      * 创建viewModel
      */
-    private fun createViewModel(): VM {
+    fun createViewModel(): VM {
         return ViewModelProvider(this).get(getVmClazz(this))
     }
 
@@ -69,45 +77,12 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     }
 
     override fun showToast(msg: Int) {
-        if (application is BaseApp) {
-            val baseApp = application as BaseApp
-            baseApp.showToast(msg)
-        }
+        UIUtils.toast(UIUtils.getString(msg))
     }
 
     override fun showToast(msg: String?) {
-        if (application is BaseApp) {
-            val baseApp = application as BaseApp
-            baseApp.showToast(msg)
-        }
+        UIUtils.toast(msg)
     }
-
-    /**
-     * 是否使用EventBus，如果需要使用子类重载此方法并返回true
-     *
-     * @return 是否启用
-     */
-    open fun usedEventBus(): Boolean {
-        return false
-    }
-
-    /**
-     * 控制注册使用EventBus
-     */
-    open fun regEventBus() {
-        if (usedEventBus()) {
-            if (!EventBus.getDefault().isRegistered(this)) {
-                EventBus.getDefault().register(this)
-            }
-        }
-    }
-
-    open fun unRegEventBus() {
-        if (EventBus.getDefault().isRegistered(this)) EventBus.getDefault().unregister(this)
-    }
-
-    @get:LayoutRes
-    open abstract val layoutResId: Int
 
     /**
      * 初始化沉浸式
@@ -164,12 +139,21 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
         return true
     }
 
-    override fun showLoading() {}
-    override fun showLoading(cancelable: Boolean) {}
-    override fun showLoading(msg: String?, cancelable: Boolean) {}
-    override fun showLoading(msg: String?) {}
-    override fun showLoading(msgResId: Int) {}
-    override fun closeLoading() {}
+    override fun showLoading() {
+
+    }
+
+    override fun showLoading(msg: String?) {
+
+    }
+
+    override fun showLoading(msgResId: Int) {
+
+    }
+
+    override fun closeLoading() {
+
+    }
 
     companion object {
         private val TAG = BaseActivity::class.java.simpleName

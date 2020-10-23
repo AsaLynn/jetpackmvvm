@@ -1,24 +1,42 @@
 package com.zxn.mvvm.demo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zxn.mvvm.demo.base.BaseDemoActivity
+import com.zxn.mvvm.demo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : MvpActivity() {
+class MainActivity : BaseDemoActivity<MainViewModel>() {
+    override var usedEventBus: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        rv!!.layoutManager = LinearLayoutManager(this)
-        rv!!.setHasFixedSize(true)
+        rv.layoutManager = LinearLayoutManager(this)
+        rv.setHasFixedSize(true)
         val adapter = MainAdapter()
         val data = ArrayList<String>()
         for (i in 0..9) {
             data.add("this is item:$i")
         }
-        adapter.setNewData(data)
-        rv!!.adapter = adapter
+        adapter.setList(data)
+        rv.adapter = adapter
+        adapter.setOnItemClickListener { adapter, view, position ->
+            startActivity(Intent(this, TestActivity::class.java))
+        }
+
+        mViewModel.getData()
+
+
     }
 
-    override fun getLayoutResId(): Int = R.layout.activity_main
+
+    override val layoutResId: Int = R.layout.activity_main
+
+
+    override fun createObserver() {
+
+    }
+
 }
