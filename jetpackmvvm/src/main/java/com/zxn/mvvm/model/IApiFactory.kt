@@ -1,15 +1,13 @@
 package com.zxn.mvvm.model
 
 import androidx.annotation.IntDef
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 
 /**
  * Created by zxn on 2019/4/30.
  */
 interface IApiFactory {
     @IntDef(MODE_ON_LINE, MODE_ON_TEST, MODE_ON_GRAY)
-    @Retention(RetentionPolicy.SOURCE)
+    @Retention(AnnotationRetention.SOURCE)
     annotation class ModeDef
 
     /**
