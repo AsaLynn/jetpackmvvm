@@ -5,10 +5,10 @@ plugins {
     id 'kotlin-android-extensions'
     id 'com.github.dcendents.android-maven'
     id 'com.jfrog.bintray'
-//    id 'kotlin-kapt'
+    id 'kotlin-kapt'
 }
-
 version = "1.0.0"
+
 android {
     compileSdkVersion 30
 
@@ -19,11 +19,12 @@ android {
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-//        javaCompileOptions {
-//            annotationProcessorOptions {
-//                arguments = [AROUTER_MODULE_NAME: project.getName()]
-//            }
-//        }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+                //arg("AROUTER_MODULE_NAME", project.rootProject.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -33,13 +34,14 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
-//kapt {
-//    arguments {
-//        arg("AROUTER_MODULE_NAME", project.getName())
-//    }
-//}
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -55,10 +57,14 @@ dependencies {
     api 'com.zxn.utils:common-utils:+'
     api 'com.google.code.gson:gson:2.8.6'
     implementation "androidx.core:core-ktx:+"
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
-//    api 'com.alibaba:arouter-api:1.5.0'
-//    kapt 'com.alibaba:arouter-compiler:1.2.2'
+    api 'com.alibaba:arouter-api:1.5.0'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
 
+    //"org.jetbrains.kotlin:kotlin-stdlib:${version["kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 def siteUrl = 'https://github.com/zhang721688/MVVMDemo'

@@ -3,14 +3,11 @@ package com.zxn.mvvm.view
 import BaseViewModel
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
 import com.zxn.mvvm.R
-import com.zxn.mvvm.ext.getVmClazz
 import com.zxn.utils.UIUtils
-import java.lang.reflect.ParameterizedType
 
 /**
  *  Updated by zxn on 2020/10/23.
@@ -36,10 +33,11 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView, IL
             registerEventBus(true)
         }
 
-        if (this.javaClass.genericSuperclass is ParameterizedType){
-            mViewModel = createViewModel()
-        }
+//        if (this.javaClass.genericSuperclass is ParameterizedType){
+//            mViewModel = createViewModel()!!
+//        }
         createObserver()
+        ARouter.getInstance().inject(this)
     }
 
     override fun onDestroy() {
@@ -47,12 +45,12 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView, IL
         registerEventBus(false)
     }
 
-    /**
-     * 创建viewModel
-     */
-    fun createViewModel(): VM {
-        return ViewModelProvider(this).get(getVmClazz(this))
-    }
+//    /**
+//     * 创建viewModel
+//     */
+//    fun createViewModel(): VM? {
+//        return ViewModelProvider(this).get(getVmClazz(this)!!)
+//    }
 
     /**
      * 启动页面

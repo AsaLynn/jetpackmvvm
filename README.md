@@ -6,6 +6,10 @@ MVVMDemo:Android最新架构之MVVM.
 implementation 'com.zxn.mvvm:jetpackmvvm:1.0.1'
 ```
 
+#### 参考资料
+https://github.com/trello/RxLifecycle
+https://github.com/mtjsoft/LibKM/
+https://blog.csdn.net/qq_28779083/article/details/108346827
 #### 标签
 
 arouter

@@ -3,14 +3,14 @@ import androidx.lifecycle.ViewModel
 /**
  * ViewModel的基类 使用ViewModel类，放弃AndroidViewModel，原因：用处不大 完全有其他方式获取Application上下文
  */
-open class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
-    /**
-     * 数据清除的时候回调次函数.
-     */
-    override fun onCleared() {
-        super.onCleared()
-    }
+//    /**
+//     * 数据清除的时候回调次函数.
+//     */
+//    override fun onCleared() {
+//        super.onCleared()
+//    }
 
 
 //    val loadingChange: UiLoadingChange by lazy { UiLoadingChange() }
