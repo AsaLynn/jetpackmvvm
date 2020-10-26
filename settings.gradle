@@ -1,4 +1,6 @@
 include ':module-login'
 include ':app'
 include ':lib-kotlinmvvm'
+include ':jetpackmvvm'
+//include ':demo'
 //include ':demo', ':jetpackmvvm'

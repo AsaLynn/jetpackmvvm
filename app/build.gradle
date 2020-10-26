@@ -2,13 +2,11 @@ plugins {
     id 'com.android.application'
     id 'bugly'
 }
-//apply plugin: 'com.android.application'
 
 apply from: "../config_build.gradle"
 
 // 依赖插件脚本
 apply from: 'tinker-support.gradle'
-//apply plugin: 'bugly'
 bugly {
     appId = ""
     appKey = ""
@@ -86,5 +84,6 @@ dependencies {
         // 引入 登录模块
         implementation project(':module-login')
     }
+    implementation project(':jetpackmvvm')
 
 }

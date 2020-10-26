@@ -10,13 +10,24 @@ plugins {
 version = "1.0.0"
 
 android {
-    compileSdkVersion 30
+    //compileSdkVersion 30
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
+    }
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.0"
+        //minSdkVersion 14
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        //targetSdkVersion 30
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        //versionCode 1
+        versionCode rootProject.ext.android["versionCode"]
+        versionName version
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         kapt {
@@ -29,42 +40,86 @@ android {
 
     buildTypes {
         release {
+            // 移除无用文件
+            shrinkResources false
+            // 开启混淆
             minifyEnabled false
+            // zipAlign优化
+            zipAlignEnabled true
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            shrinkResources false
+            minifyEnabled false
+            zipAlignEnabled false
+            //debuggable true
+            //jniDebuggable true
         }
     }
 
+    //支持java8
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
 }
-
-
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.2.0'
+    api rootProject.ext.dependencies["multidex"]
 
-    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
-    api 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
-    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    api rootProject.ext.dependencies["core_ktx"]
+    api rootProject.ext.dependencies["lifecycle_extensions"]
+    
+    api rootProject.ext.dependencies["rxlifecycle"]
 
-    api 'com.gyf.immersionbar:immersionbar:3.0.0'
-    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
-    api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+
+    api rootProject.ext.dependencies["gson"]
+
+    // arouter
+    api rootProject.ext.dependencies["arouter"]
+    kapt rootProject.ext.dependencies["arouter-compiler"]
+
+    api rootProject.ext.dependencies["kotlin_stdlib"]
+    api rootProject.ext.dependencies["kotlin_stdlib_jdk7"]
+
+    api rootProject.ext.dependencies["immersionbar"]
+    api rootProject.ext.dependencies["immersionbar_components"]
+    api rootProject.ext.dependencies["immersionbar_ktx"]
+
+    //rxlifecycle2
+    api rootProject.ext.dependencies["rxlifecycle"]
+    api rootProject.ext.dependencies["rxlifecycle_components"]
+
+    api rootProject.ext.dependencies["eventbus"]
+
+    api rootProject.ext.dependencies["autosize"]
+
+    api rootProject.ext.dependencies["statusbarutil"]
+
+    api rootProject.ext.dependencies["PermissionX"]
+
     api 'com.zxn.utils:common-utils:+'
-    api 'com.google.code.gson:gson:2.8.6'
-    implementation "androidx.core:core-ktx:+"
-    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
-    api 'com.alibaba:arouter-api:1.5.0'
-    kapt 'com.alibaba:arouter-compiler:1.2.2'
+//    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+//    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+//    api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+//    api 'com.zxn.utils:common-utils:+'
+//    implementation "androidx.core:core-ktx:+"
+//    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
-    //"org.jetbrains.kotlin:kotlin-stdlib:${version["kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+//    api 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
+//    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    api 'com.alibaba:arouter-api:1.5.0'
+//    kapt 'com.alibaba:arouter-compiler:1.2.2'
+//    api 'com.google.code.gson:gson:2.8.6'
+
 }
 
 def siteUrl = 'https://github.com/zhang721688/MVVMDemo'

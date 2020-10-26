@@ -74,11 +74,11 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
-            shrinkResources false
+            //shrinkResources false
             minifyEnabled false
-            zipAlignEnabled false
-            debuggable true
-            jniDebuggable true
+            //zipAlignEnabled false
+            //debuggable true
+            //jniDebuggable true
             signingConfig signingConfigs.debug
         }
     }

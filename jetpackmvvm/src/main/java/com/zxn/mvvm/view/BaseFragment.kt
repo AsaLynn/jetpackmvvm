@@ -1,6 +1,5 @@
 package com.zxn.mvvm.view
 
-import BaseViewModel
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater

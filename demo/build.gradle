@@ -1,35 +1,85 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
+//    id 'kotlin-android'
+//    id 'kotlin-android-extensions'
+//    id 'kotlin-kapt'
+//    id 'bugly'
 }
 
+apply from: "../config_build.gradle"
+
+// 依赖插件脚本
+//apply from: 'tinker-support.gradle'
+//bugly {
+//    appId = ""
+//    appKey = ""
+//    appPackage = "cn.mtjsoft.libkotlinmvvm"
+//    appVersion = rootProject.ext.android["versionName"]
+//    debug = true
+//}
+
 android {
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    compileSdkVersion 30
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+//    compileSdkVersion 30
+    resourcePrefix "app_" //给 Module 内的资源名增加前缀, 避免资源名冲突
     defaultConfig {
         applicationId "com.zxn.mvvm.demo"
-        minSdkVersion 17
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        //minSdkVersion 17
+        //minSdkVersion rootProject.ext.android["minSdkVersion"]
+        //targetSdkVersion 30
+        //versionCode 1
+        //versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        kapt {
-            arguments {
-                //arg("AROUTER_MODULE_NAME", project.rootProject.getName())
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
+//        kapt {
+//            arguments {
+//                //arg("AROUTER_MODULE_NAME", project.rootProject.getName())
+//                arg("AROUTER_MODULE_NAME", project.getName())
+//            }
+//        }
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'android'
+            keyPassword 'android'
+            storeFile file('../android.jks')
+            storePassword 'android'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
+        release {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            keyAlias 'android'
+            keyPassword 'android'
+            storeFile file('../android.jks')
+            storePassword 'android'
         }
     }
+
     buildTypes {
         release {
+            // 移除无用文件
+            shrinkResources true
+            // 开启混淆
             minifyEnabled false
+            // zipAlign优化
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            shrinkResources false
+            minifyEnabled false
+            zipAlignEnabled false
+            debuggable true
+            jniDebuggable true
+            signingConfig signingConfigs.debug
         }
     }
 }
