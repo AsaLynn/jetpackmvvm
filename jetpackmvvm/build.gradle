@@ -7,7 +7,7 @@ plugins {
     id 'com.jfrog.bintray'
     id 'kotlin-kapt'
 }
-version = "1.0.2"
+version = "1.0.3"
 
 android {
     compileSdkVersion 30

@@ -2,6 +2,7 @@ package com.zxn.mvvm.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
@@ -16,18 +17,21 @@ import java.lang.reflect.ParameterizedType
 /**
  *  Updated by zxn on 2020/10/23.
  */
-abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatActivity(), IView, ILoadingView {
+abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatActivity(), IBaseView, ILoadingView {
 
     lateinit var mViewModel: VM
     override var cancelable: Boolean = true
     override lateinit var mContext: AppCompatActivity
     override var usedEventBus: Boolean = false
+    override var usedImmersionBar: Boolean = false
+    override var titleBar: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext = this
         if (layoutResId != 0) {
             setContentView(layoutResId)
+            onInitView()
         }
         onInitImmersionBar()
         if (usedEventBus) {
@@ -79,7 +83,7 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
         UIUtils.toast(UIUtils.getString(msg))
     }
 
-    override fun showToast(msg: String?) {
+    override fun showToast(msg: String) {
         UIUtils.toast(msg)
     }
 
@@ -88,8 +92,14 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
      * Init immersion bar.
      */
     open fun onInitImmersionBar() {
-        if (usedStatusBarDarkFont()) {
-            setStatusBarDarkFont()
+        if (usedImmersionBar) {
+            if (usedStatusBarDarkFont()) {
+                setStatusBarDarkFont()
+            } else {
+                ImmersionBar.with(this)
+                        .titleBar(titleBar)
+                        .init()
+            }
         }
     }
 
@@ -102,6 +112,7 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
         return false
     }
 
+
     /**
      * 白色状态栏,黑色字体,黑色导航栏,解决了白色状态栏无法看见状态栏字体颜色问题
      */
@@ -109,6 +120,7 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
         ImmersionBar.with(this)
                 .statusBarDarkFont(true)
                 .navigationBarDarkIcon(true)
+                .titleBar(titleBar)
                 .init()
     }
 
@@ -163,6 +175,19 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    override fun initBaseView() {
 //        //让ViewModel拥有View的生命周期感应

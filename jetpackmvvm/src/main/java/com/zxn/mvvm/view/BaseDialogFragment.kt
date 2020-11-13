@@ -20,7 +20,6 @@ abstract class BaseDialogFragment<VM : BaseViewModel<out BaseModel<*>>> : Dialog
     protected var TAG = this.javaClass.simpleName
     lateinit var mViewModel: VM
     override lateinit var mContext: AppCompatActivity
-    override var usedEventBus: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,14 +80,11 @@ abstract class BaseDialogFragment<VM : BaseViewModel<out BaseModel<*>>> : Dialog
         }
     }
 
-    override fun showToast(msg: String?) {
+    override fun showToast(msg: String) {
         if (activity is BaseActivity<*>) {
             val activity = activity as BaseActivity<*>?
             activity!!.showToast(msg)
         }
     }
 
-    override fun registerEventBus(isRegister: Boolean) {
-
-    }
 }

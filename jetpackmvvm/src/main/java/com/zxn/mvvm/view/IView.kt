@@ -17,25 +17,14 @@ interface IView {
      */
     var mContext: AppCompatActivity
 
-    /**
-     * 是否使用EventBus
-     */
-    var usedEventBus: Boolean
-
-
-
     fun showToast(msg: Int)
-    fun showToast(msg: String?)
 
+    fun showToast(msg: String)
 
+    fun onInitView()
 
     /**
      * 创建LiveData数据观察者
      */
     fun createObserver()
-
-    /**
-     * 控制注册注销使用EventBus
-     */
-    fun registerEventBus(isRegister: Boolean)
 }
