@@ -1,6 +1,5 @@
 package com.zxn.mvvm.demo.base
 
-import BaseViewModel
 import com.zxn.mvvm.view.BaseActivity
 
 /**

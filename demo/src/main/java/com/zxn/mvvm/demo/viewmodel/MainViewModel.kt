@@ -1,7 +1,7 @@
 package com.zxn.mvvm.demo.viewmodel
 
-import BaseViewModel
 import android.util.Log
+import com.zxn.mvvm.viewmodel.BaseViewModel
 
 /**
  * Copyright(c) ${}YEAR} ZhuLi co.,Ltd All Rights Reserved.
@@ -16,7 +16,7 @@ import android.util.Log
  * @updateRemark: 更新说明：
  * @version: 1.0
  * */
-class MainViewModel : BaseViewModel(){
+class MainViewModel : BaseViewModel<Nothing>(){
 
     fun getData(){
         Log.i("TAG", "getData: ")

@@ -11,8 +11,22 @@ fun <VM> getVmClazz(obj: Any): VM? {
     try {
         return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as VM
     } catch (e: Exception) {
-        return null
+        e.printStackTrace()
     }
+    return null
+}
+
+fun <M> getNewInstance(obj: Any?, i: Int): M? {
+    if (obj != null) {
+        try {
+            return ((obj.javaClass
+                    .genericSuperclass as ParameterizedType).actualTypeArguments[i] as Class<M>)
+                    .newInstance()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    return null
 }
 
 ///**

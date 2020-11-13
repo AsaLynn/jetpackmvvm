@@ -39,8 +39,8 @@ import com.jaeger.library.StatusBarUtil
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 //import kotlinx.android.synthetic.main.base_layout.*
 import me.jessyan.autosize.AutoSizeCompat
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+//import org.greenrobot.eventbus.Subscribe
+//import org.greenrobot.eventbus.ThreadMode
 import java.lang.reflect.ParameterizedType
 import java.util.*
 

@@ -1,39 +1,45 @@
 package com.zxn.mvvm.viewmodel
 
-import android.os.Bundle
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
-//import com.mtjsoft.www.kotlinmvputils.event.SingleLiveEvent
-import com.trello.rxlifecycle2.LifecycleProvider
-import java.lang.ref.WeakReference
+import com.zxn.mvvm.ext.getNewInstance
+import com.zxn.mvvm.model.BaseModel
 
-abstract class BaseViewModel : ViewModel(), LifecycleObserver {
+/**
+ *  Created by zxn on 2020/11/5.
+ */
+abstract class BaseViewModel<M : BaseModel<*>?> : ViewModel() {
+    @JvmField
+    protected var mModel: M? = null
+
+    init {
+        mModel = getNewInstance(this, 0)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        mModel?.clear()
+    }
+
+}
+
+/*, LifecycleObserver*/
+//    private var lifecycle: WeakReference<LifecycleProvider<*>>? = null
+//import androidx.lifecycle.LifecycleObserver
+//fun injectLifecycleProvider(lifecycle: LifecycleProvider<*>) {
+//    this.lifecycle = WeakReference(lifecycle)
+//}
+//
+//fun getLifecycleProvider(): LifecycleProvider<*>? {
+//    return lifecycle?.get()
+//}
 
 //    private var uc: UIChangeLiveData? = null
-
-    private var lifecycle: WeakReference<LifecycleProvider<*>>? = null
-
-    /**
-     * 注入RxLifecycle生命周期
-     *
-     * @param lifecycle
-     */
-    fun injectLifecycleProvider(lifecycle: LifecycleProvider<*>) {
-        this.lifecycle = WeakReference(lifecycle)
-    }
-
-    fun getLifecycleProvider(): LifecycleProvider<*>? {
-        return lifecycle?.get()
-    }
-
-
 //    fun getUC(): UIChangeLiveData {
 //        if (uc == null) {
 //            uc = UIChangeLiveData()
 //        }
 //        return uc!!
 //    }
-
 //    /**
 //     * 显示loading
 //     */
@@ -149,19 +155,16 @@ abstract class BaseViewModel : ViewModel(), LifecycleObserver {
 //            return onBackPressedEvent!!
 //        }
 //    }
-
 //    /**
 //     * 判断空
 //     */
 //    fun isEmpty(list: Any): Boolean {
 //        return CommonUtils.isEmpty(list)
 //    }
-
-    object ParameterField {
-        var CLASS = "CLASS"
-        var CANONICAL_NAME = "CANONICAL_NAME"
-        var BUNDLE = "BUNDLE"
-        var MSG = "MSG"
-        var IS_CANCLE = "IS_CANCLE"
-    }
-}
+//    object ParameterField {
+//        var CLASS = "CLASS"
+//        var CANONICAL_NAME = "CANONICAL_NAME"
+//        var BUNDLE = "BUNDLE"
+//        var MSG = "MSG"
+//        var IS_CANCLE = "IS_CANCLE"
+//    }
