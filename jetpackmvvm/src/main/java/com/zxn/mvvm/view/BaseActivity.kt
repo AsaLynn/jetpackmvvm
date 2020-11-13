@@ -174,6 +174,10 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
 
     }
 
+    override fun onInitView() {
+
+    }
+
 }
 
 
