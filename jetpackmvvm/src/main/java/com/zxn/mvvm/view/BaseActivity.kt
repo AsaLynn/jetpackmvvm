@@ -35,6 +35,8 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
             setContentView(layoutResId)
         }
 
+        ARouter.getInstance().inject(this)
+
         if (usedEventBus) {
             registerEventBus(true)
         }
@@ -43,13 +45,12 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
             mViewModel = createViewModel()!!
         }
 
+        createObserver()
+
         onInitView()
 
         onInitImmersionBar()
 
-        createObserver()
-
-        ARouter.getInstance().inject(this)
     }
 
     override fun onDestroy() {
