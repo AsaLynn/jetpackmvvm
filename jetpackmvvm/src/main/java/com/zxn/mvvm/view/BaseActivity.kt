@@ -28,12 +28,13 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mContext = this
+
         if (layoutResId != 0) {
             setContentView(layoutResId)
-            onInitView()
         }
-        onInitImmersionBar()
+
         if (usedEventBus) {
             registerEventBus(true)
         }
@@ -41,7 +42,13 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatAct
         if (this.javaClass.genericSuperclass is ParameterizedType) {
             mViewModel = createViewModel()!!
         }
+
+        onInitView()
+
+        onInitImmersionBar()
+
         createObserver()
+
         ARouter.getInstance().inject(this)
     }
 
