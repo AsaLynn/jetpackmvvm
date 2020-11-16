@@ -12,11 +12,11 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.zxn.mvvm.R
 import com.zxn.mvvm.ext.getVmClazz
-import com.zxn.mvvm.model.BaseModel
+import com.zxn.mvvm.model.IBaseModel
 import com.zxn.mvvm.viewmodel.BaseViewModel
 import java.lang.reflect.ParameterizedType
 
-abstract class BaseDialogFragment<VM : BaseViewModel<out BaseModel<*>>> : DialogFragment(), IView {
+abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : DialogFragment(), IView {
     protected var TAG = this.javaClass.simpleName
     lateinit var mViewModel: VM
     override lateinit var mContext: AppCompatActivity

@@ -2,12 +2,12 @@ package com.zxn.mvvm.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.zxn.mvvm.ext.getNewInstance
-import com.zxn.mvvm.model.BaseModel
+import com.zxn.mvvm.model.IBaseModel
 
 /**
  *  Created by zxn on 2020/11/5.
  */
-abstract class BaseViewModel<M : BaseModel<*>?> : ViewModel() {
+abstract class BaseViewModel<M : IBaseModel<*>?> : ViewModel() {
     @JvmField
     protected var mModel: M? = null
 

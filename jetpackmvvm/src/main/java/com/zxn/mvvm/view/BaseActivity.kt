@@ -9,7 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
 import com.zxn.mvvm.R
 import com.zxn.mvvm.ext.getVmClazz
-import com.zxn.mvvm.model.BaseModel
+import com.zxn.mvvm.model.IBaseModel
 import com.zxn.mvvm.viewmodel.BaseViewModel
 import com.zxn.utils.UIUtils
 import java.lang.reflect.ParameterizedType
@@ -17,7 +17,7 @@ import java.lang.reflect.ParameterizedType
 /**
  *  Updated by zxn on 2020/10/23.
  */
-abstract class BaseActivity<VM : BaseViewModel<out BaseModel<*>>> : AppCompatActivity(), IBaseView, ILoadingView {
+abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : AppCompatActivity(), IBaseView, ILoadingView {
 
     lateinit var mViewModel: VM
     override var cancelable: Boolean = true
