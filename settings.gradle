@@ -1,6 +1,6 @@
+include ':jetpackmvvm'
 include ':demo'
 
-//include ':jetpackmvvm'
 //include ':module-login'
 //include ':app'
 //include ':lib-kotlinmvvm'
