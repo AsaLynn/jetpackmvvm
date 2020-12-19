@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.zxn.mvvm.R
@@ -17,8 +19,10 @@ import java.lang.reflect.ParameterizedType
  *  Updated by zxn on 2020/10/23.
  */
 abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : AppCompatActivity(), IBaseView,
-    ILoadingView {
+        ILoadingView {
 
+
+    override var usedViewBinding = false
     lateinit var mViewModel: VM
     override var cancelable: Boolean = true
     override lateinit var mContext: AppCompatActivity
@@ -26,21 +30,23 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : AppCompatAc
     override var usedImmersionBar: Boolean = false
     override var titleBar: View? = null
     override var usedStatusBarDarkFont: Boolean = false
-//    abstract var themeResId: Int
 
-
+    protected inline fun <reified T : ViewDataBinding> binding(): Lazy<T> = lazy {
+        DataBindingUtil.setContentView<T>(this, layoutResId).apply {
+            lifecycleOwner = this@BaseActivity
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mContext = this
 
-        if (layoutResId != 0) {
-            //setTheme(themeResId)
-            setContentView(layoutResId)
+        if (!usedViewBinding) {
+            if (layoutResId != 0) {
+                setContentView(layoutResId)
+            }
         }
-
-//        ARouter.getInstance().inject(this)
 
         if (usedEventBus) {
             registerEventBus(true)
@@ -112,8 +118,8 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : AppCompatAc
                 setStatusBarDarkFont()
             } else {
                 ImmersionBar.with(this)
-                    .titleBar(titleBar)
-                    .init()
+                        .titleBar(titleBar)
+                        .init()
             }
         }
     }
@@ -124,10 +130,10 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : AppCompatAc
      */
     open fun setStatusBarDarkFont() {
         ImmersionBar.with(this)
-            .statusBarDarkFont(true)
-            .navigationBarDarkIcon(true)
-            .titleBar(titleBar)
-            .init()
+                .statusBarDarkFont(true)
+                .navigationBarDarkIcon(true)
+                .titleBar(titleBar)
+                .init()
     }
 
     /**
@@ -156,10 +162,6 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : AppCompatAc
         return true
     }
 
-    override fun showLoading() {
-
-    }
-
     override fun showLoading(msg: String?) {
 
     }
@@ -172,11 +174,12 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : AppCompatAc
 
     }
 
-    fun isViewModelInitialized() : Boolean = :: mViewModel.isInitialized
+    protected fun isViewModelInitialized(): Boolean = ::mViewModel.isInitialized
 
-    companion object {
-        private val TAG = BaseActivity::class.java.simpleName
-    }
+//    /**
+//     * 供子类BaseVmDbActivity 初始化Databinding操作
+//     */
+//    open fun initViewDataBinding() {}
 }
 
 

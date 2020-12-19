@@ -1,5 +1,6 @@
 package com.zxn.mvvm.view
 
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -10,7 +11,8 @@ interface IView {
     /**
      * 布局的资源id.
      */
-    val layoutResId: Int
+
+    val layoutResId:  Int
 
     /**
      * 上下文

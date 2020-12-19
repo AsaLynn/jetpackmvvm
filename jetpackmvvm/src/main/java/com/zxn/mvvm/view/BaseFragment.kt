@@ -19,6 +19,7 @@ import java.lang.reflect.ParameterizedType
  */
 abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(), IBaseView,ILoadingView {
 
+    override var usedViewBinding = false
     private var mPageTitle = ""
     lateinit var mViewModel: VM
     override var titleBar: View? = null
@@ -36,7 +37,7 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (this.javaClass.genericSuperclass is ParameterizedType) {
-            mViewModel = createViewModel()!!
+            mViewModel = createViewModel()
         }
     }
 
@@ -70,12 +71,6 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(),
 
     val pageTitle: CharSequence = mPageTitle
 
-    override fun showLoading() {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity!!.showLoading()
-        }
-    }
 
     override fun showLoading(msg: String?) {
         if (activity is BaseActivity<*>) {
@@ -90,7 +85,6 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(),
             activity!!.showLoading(msgResId)
         }
     }
-
 
     override fun closeLoading() {
         if (activity is BaseActivity<*>) {

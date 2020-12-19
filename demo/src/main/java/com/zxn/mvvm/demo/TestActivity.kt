@@ -17,8 +17,11 @@ class TestActivity : BaseActivity<Nothing>() {
         setContentView(R.layout.activity_test)
     }
 
-    override val layoutResId: Int
-        get() = R.layout.activity_test
+    override val layoutResId: Int = R.layout.activity_test
+
+    override fun onInitView() {
+
+    }
 
     override fun createObserver() {
 

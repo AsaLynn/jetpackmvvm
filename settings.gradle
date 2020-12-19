@@ -1,3 +1,4 @@
+include ':wan'
 include ':jetpackmvvm'
 include ':demo'
 

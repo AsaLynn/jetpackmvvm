@@ -70,9 +70,11 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
-
-
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

@@ -8,6 +8,11 @@ import android.view.View
 interface IBaseView : IView {
 
     /**
+     * 是否需要使用DataBinding
+     */
+    var usedViewBinding: Boolean
+
+    /**
      * 标题.
      */
     var titleBar: View?
