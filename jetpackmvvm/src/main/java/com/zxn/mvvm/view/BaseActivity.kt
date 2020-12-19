@@ -21,7 +21,6 @@ import java.lang.reflect.ParameterizedType
 abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : AppCompatActivity(), IBaseView,
         ILoadingView {
 
-
     override var usedViewBinding = false
     lateinit var mViewModel: VM
     override var cancelable: Boolean = true
