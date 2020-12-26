@@ -23,6 +23,17 @@ class ReadHistoryActivity : BaseActivity<ReadHistoryViewModel>() {
 
 //    private val readHistoryViewModel by viewModel<ReadHistoryViewModel>()
 
+    override val layoutResId: Int = R.layout.activity_read_history
+
+    override fun createObserver() {
+        startObserve()
+    }
+
+    override fun onInitView() {
+        initView()
+        initData()
+    }
+
     fun initView() {
         binding.run {
 //            viewModel = readHistoryViewModel
@@ -30,7 +41,6 @@ class ReadHistoryActivity : BaseActivity<ReadHistoryViewModel>() {
             adapter = readHistoryAdapter
         }
         readHistoryAdapter.run {
-
             setOnItemClickListener { _, _, position ->
                 val bundle = Bundle()
                 bundle.putString(BrowserActivity.URL, readHistoryAdapter.data[position].link)
@@ -94,15 +104,8 @@ class ReadHistoryActivity : BaseActivity<ReadHistoryViewModel>() {
 
     }
 
-    override val layoutResId: Int = R.layout.activity_read_history
 
-    override fun onInitView() {
-        initView()
-        initData()
-    }
 
-    override fun createObserver() {
-        startObserve()
-    }
+
 
 }
