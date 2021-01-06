@@ -20,6 +20,10 @@ class TestActivity : BaseActivity<Nothing>() {
     override val layoutResId: Int
         get() = R.layout.activity_test
 
+    override fun onInitView() {
+
+    }
+
     override fun createObserver() {
 
     }

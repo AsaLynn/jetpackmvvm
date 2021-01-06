@@ -30,6 +30,8 @@ abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : Dialo
         super.onActivityCreated(savedInstanceState)
         mContext = activity as AppCompatActivity
 
+        onInitView()
+
         try {
             if (this.javaClass.genericSuperclass is ParameterizedType) {
                 mViewModel = createViewModel()
