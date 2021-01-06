@@ -3,6 +3,7 @@ MVVMDemo:Android最新架构之MVVM.
 
 #### 使用
 ```
+implementation 'com.zxn.mvvm:jetpackmvvm:1.1.1'
 implementation 'com.zxn.mvvm:jetpackmvvm:1.0.9'
 ```
 
