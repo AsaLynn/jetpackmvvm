@@ -30,8 +30,6 @@ abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : Dialo
         super.onActivityCreated(savedInstanceState)
         mContext = activity as AppCompatActivity
 
-        onInitView()
-
         try {
             if (this.javaClass.genericSuperclass is ParameterizedType) {
                 mViewModel = createViewModel()
@@ -40,6 +38,8 @@ abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : Dialo
             Log.i(TAG, "onActivityCreated: VM == null")
         }
         createObserver()
+
+        onInitView()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = if (layoutResId <= 0) super.onCreateView(inflater, container, savedInstanceState)
