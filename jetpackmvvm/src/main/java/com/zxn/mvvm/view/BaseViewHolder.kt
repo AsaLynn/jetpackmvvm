@@ -27,7 +27,7 @@ abstract class BaseViewHolder(protected var mContext: FragmentActivity?) {
         onInitView(view)
     }
 
-    protected fun onInitView(rootView: View?) {}
+    abstract fun onInitView(rootView: View?)
 
     fun setVisibility(visibility: Boolean) {
         if (null != view) {
