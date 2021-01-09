@@ -1,5 +1,6 @@
 package com.zxn.mvvm.view
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -8,22 +9,33 @@ import androidx.fragment.app.FragmentActivity
 /**
  *  Updated by zxn on 2020/10/23.
  */
-abstract class BaseViewHolder(protected var mContext: FragmentActivity?) {
+abstract class BaseViewHolder {
+
+    lateinit var mContext: Context
+
     var view: View? = null
         protected set
+
+    constructor(context: FragmentActivity) {
+        mContext = context
+        initView()
+    }
 
     /**
      * @param fragment 所依附的acitivty必须是FragmentActivity
      */
-    constructor(fragment: Fragment) : this(fragment.activity) {
-
+    constructor(fragment: Fragment) {
+        fragment.activity?.let {
+            mContext = it
+        }
+        initView()
     }
 
     private fun initView() {
-        if (layoutResId == 0) {
+        if (layoutResId() == 0) {
             return
         }
-        view = LayoutInflater.from(mContext).inflate(layoutResId, null, false)
+        view = LayoutInflater.from(mContext).inflate(layoutResId(), null, false)
         onInitView(view)
     }
 
@@ -35,9 +47,9 @@ abstract class BaseViewHolder(protected var mContext: FragmentActivity?) {
         }
     }
 
-    protected abstract val layoutResId: Int
+     abstract fun layoutResId(): Int
 
-    init {
-        initView()
-    }
+//    init {
+//        initView()
+//    }
 }
