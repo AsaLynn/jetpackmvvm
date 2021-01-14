@@ -5,7 +5,7 @@ import android.view.View
 /**
  *  Created by zxn on 2020/11/13.
  */
-interface IBaseView : IView {
+interface IBaseView : IView, IToastView {
 
     /**
      * 标题.

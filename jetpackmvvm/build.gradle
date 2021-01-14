@@ -8,7 +8,7 @@ plugins {
     id 'kotlin-kapt'
 }
 
-version = "1.1.5"
+version = "1.1.6"
 
 android {
     compileSdkVersion 30
@@ -78,14 +78,15 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
+    api rootProject.ext.dependencies["rxlifecycle"]
+    api rootProject.ext.dependencies["rxlifecycle_components"]
+
 //    api 'com.google.code.gson:gson:2.8.6'
 //    api rootProject.ext.dependencies["multidex"]
 //    api rootProject.ext.dependencies["immersionbar"]
 //    api rootProject.ext.dependencies["immersionbar_components"]
 //    api rootProject.ext.dependencies["immersionbar_ktx"]
 //    api rootProject.ext.dependencies["lifecycle_extensions"]
-//    api rootProject.ext.dependencies["rxlifecycle"]
-//    api rootProject.ext.dependencies["rxlifecycle_components"]
 //    api rootProject.ext.dependencies["autosize"]
 //    api rootProject.ext.dependencies["statusbarutil"]
 //    api rootProject.ext.dependencies["PermissionX"]

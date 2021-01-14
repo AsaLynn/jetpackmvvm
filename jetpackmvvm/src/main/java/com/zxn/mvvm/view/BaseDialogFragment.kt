@@ -16,7 +16,7 @@ import com.zxn.mvvm.model.IBaseModel
 import com.zxn.mvvm.viewmodel.BaseViewModel
 import java.lang.reflect.ParameterizedType
 
-abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : DialogFragment(), IView {
+abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : DialogFragment(), IView,IToastView {
     protected var TAG = this.javaClass.simpleName
     lateinit var mViewModel: VM
     override lateinit var mContext: AppCompatActivity

@@ -70,17 +70,17 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(),
 
     val pageTitle: CharSequence = mPageTitle
 
-    override fun showLoading() {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity!!.showLoading()
-        }
-    }
+//    override fun showLoading() {
+//        if (activity is BaseActivity<*>) {
+//            val activity = activity as BaseActivity<*>?
+//            activity!!.showLoading()
+//        }
+//    }
 
     override fun showLoading(msg: String?) {
         if (activity is BaseActivity<*>) {
             val activity = activity as BaseActivity<*>?
-            activity!!.showLoading(msg)
+            activity?.showLoading(msg)
         }
     }
 

@@ -17,9 +17,7 @@ interface IView {
      */
     var mContext: AppCompatActivity
 
-    fun showToast(msg: Int)
 
-    fun showToast(msg: String)
 
     fun onInitView()
 

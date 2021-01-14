@@ -416,11 +416,11 @@ abstract class BaseTopViewActivity : RxAppCompatActivity(), View.OnClickListener
      * toast
      */
     fun toast(text: CharSequence) {
-        HHTipUtils.getInstance().showToast(getContext(), text.toString())
+        //HHTipUtils.getInstance().showToast(getContext(), text.toString())
     }
 
     fun toast(resId: Int) {
-        HHTipUtils.getInstance().showToast(getContext(), getString(resId))
+        //HHTipUtils.getInstance().showToast(getContext(), getString(resId))
     }
 
     /**
