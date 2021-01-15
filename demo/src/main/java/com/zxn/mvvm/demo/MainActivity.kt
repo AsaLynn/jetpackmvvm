@@ -1,6 +1,5 @@
 package com.zxn.mvvm.demo
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,8 +28,9 @@ class MainActivity : BaseActivity<MainViewModel>() {
         rv.adapter = adapter
         adapter.setOnItemClickListener { _, view, position ->
             //showToast(adapter.data[position])
-            mViewModel.showToast("showToast")
-            startActivity(Intent(this, TestActivity::class.java))
+            //mViewModel.showToast("showToast")
+            //startActivity(Intent(this, TestActivity::class.java))
+            MainDgFragment.newInstance().show(supportFragmentManager)
         }
         mViewModel.getData()
     }

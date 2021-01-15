@@ -22,7 +22,7 @@ import com.mtjsoft.www.kotlinmvputils.R
 import com.mtjsoft.www.kotlinmvputils.manager.AndBaseTopViewInfo
 import com.mtjsoft.www.kotlinmvputils.model.EventMessage
 import com.mtjsoft.www.kotlinmvputils.utils.AndEventBusUtils
-import com.mtjsoft.www.kotlinmvputils.utils.HHTipUtils
+//import com.mtjsoft.www.kotlinmvputils.utils.HHTipUtils
 import com.mtjsoft.www.kotlinmvputils.utils.HHWeakHandler
 import com.trello.rxlifecycle2.components.support.RxFragment
 import kotlinx.android.synthetic.main.base_layout.*
@@ -326,7 +326,7 @@ abstract class BaseTopViewFragment : RxFragment(), View.OnClickListener {
      * toast
      */
     fun toast(text: CharSequence) {
-        HHTipUtils.getInstance().showToast(context, text.toString())
+        //HHTipUtils.getInstance().showToast(context, text.toString())
     }
 
     /**

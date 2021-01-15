@@ -64,8 +64,6 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
         onInitView()
 
         onInitImmersionBar()
-
-
     }
 
     override fun onDestroy() {

@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
+import com.trello.rxlifecycle2.components.support.RxFragment
 import com.zxn.mvvm.ext.getVmClazz
 import com.zxn.mvvm.model.IBaseModel
 import com.zxn.mvvm.viewmodel.BaseViewModel
@@ -17,7 +17,7 @@ import java.lang.reflect.ParameterizedType
 /**
  * Updated by zxn on 2020/10/23.
  */
-abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(), IBaseView,ILoadingView {
+abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(), IBaseView, ILoadingView {
 
     private var mPageTitle = ""
     lateinit var mViewModel: VM
@@ -36,20 +36,26 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (this.javaClass.genericSuperclass is ParameterizedType) {
-            mViewModel = createViewModel()!!
+            mViewModel = createViewModel()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-            = if (layoutResId <= 0) super.onCreateView(inflater, container, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = if (layoutResId <= 0) super.onCreateView(inflater, container, savedInstanceState)
     else inflater.inflate(layoutResId, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onInitView()
 
-        createObserver()
+        if (::mViewModel.isInitialized) {
+            createObserver()
+            lifecycle.addObserver(mViewModel)
+            mViewModel.injectLifecycleProvider(this)
+            registorUIChangeLiveDataCallBack()
+        }
+
+        onInitView()
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (usedEventBus) registerEventBus(true)
@@ -125,8 +131,8 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(),
                 setStatusBarDarkFont()
             } else {
                 ImmersionBar.with(this)
-                    .titleBar(titleBar)
-                    .init()
+                        .titleBar(titleBar)
+                        .init()
             }
         }
     }
@@ -136,9 +142,58 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : Fragment(),
      */
     open fun setStatusBarDarkFont() {
         ImmersionBar.with(this)
-            .statusBarDarkFont(true)
-            .navigationBarDarkIcon(true)
-            .titleBar(titleBar)
-            .init()
+                .statusBarDarkFont(true)
+                .navigationBarDarkIcon(true)
+                .titleBar(titleBar)
+                .init()
     }
+
+    /**
+     * 注册ViewModel与View的契约UI回调事件
+     */
+    private fun registorUIChangeLiveDataCallBack() {
+        //加载对话框显示
+        mViewModel.getUC().getShowLoadingEvent().observe(this, {
+            //showLoadingUI(it[BaseViewModel.ParameterField.MSG].toString(), it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean)
+            cancelable = it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean
+            if (it[BaseViewModel.ParameterField.MSG] is String) {
+                showLoading(it[BaseViewModel.ParameterField.MSG] as String)
+            }
+            if (it[BaseViewModel.ParameterField.MSG] is Int) {
+                showLoading(it[BaseViewModel.ParameterField.MSG] as Int)
+            }
+        })
+        //加载对话框消失
+        mViewModel.getUC().getHideLoadingEvent().observe(this, {
+            closeLoading()
+        })
+        //Toast显示
+        mViewModel.getUC().getShowToastEvent().observe(this, {
+            if (it is String) {
+                showToast(it)
+            }
+            if (it is Int) {
+                showToast(it)
+            }
+        })
+//        //跳入新页面
+//        mViewModel.getUC().getStartActivityEvent()
+//                .observe(this, {
+//                    fun onChanged(@Nullable params: Map<String, Any>) {
+//                        val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>
+//                        val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle
+//                        startActivity(clz, bundle)
+//                    }
+//                })
+//        //关闭界面
+//        mViewModel.getUC().getFinishEvent().observe(this, {
+//            setResult(Activity.RESULT_OK)
+//            finish()
+//        })
+//        //关闭上一层
+//        mViewModel.getUC().getOnBackPressedEvent().observe(this, {
+//            onBackPressed()
+//        })
+    }
+
 }
