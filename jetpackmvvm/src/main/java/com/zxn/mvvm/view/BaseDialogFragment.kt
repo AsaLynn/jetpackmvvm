@@ -67,7 +67,7 @@ abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxApp
      *
      * @return
      */
-    protected fun initTheme(): Int {
+    open fun initTheme(): Int {
         //return R.style.BaseDialog_FullScreen;
         return R.style.BaseDialog_Nice
     }
