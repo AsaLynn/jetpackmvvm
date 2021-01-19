@@ -64,4 +64,6 @@ class MainDgFragment : BaseDialogFragment<MainViewModel>() {
     override fun showToast(msg: String) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show()
     }
+
+    override fun initTheme(): Int = super.initTheme()
 }

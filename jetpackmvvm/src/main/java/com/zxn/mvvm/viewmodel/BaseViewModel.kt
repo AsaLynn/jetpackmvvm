@@ -3,8 +3,8 @@ package com.zxn.mvvm.viewmodel
 import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
-import com.mtjsoft.www.kotlinmvputils.event.SingleLiveEvent
 import com.trello.rxlifecycle2.LifecycleProvider
+import com.zxn.mvvm.event.SingleLiveEvent
 import com.zxn.mvvm.ext.getNewInstance
 import com.zxn.mvvm.model.IBaseModel
 import com.zxn.mvvm.view.ILoadingView

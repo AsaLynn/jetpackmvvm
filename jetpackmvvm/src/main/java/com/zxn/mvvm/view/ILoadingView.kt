@@ -8,7 +8,6 @@ interface ILoadingView {
      * 控制加载框是否可取消
      */
     var cancelable: Boolean
-    //fun showLoading()
     fun showLoading(msg: String? = null)
     fun showLoading(msgResId: Int)
     fun closeLoading()

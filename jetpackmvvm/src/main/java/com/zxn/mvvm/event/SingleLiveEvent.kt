@@ -1,4 +1,4 @@
-package com.mtjsoft.www.kotlinmvputils.event
+package com.zxn.mvvm.event
 
 import android.util.Log
 import androidx.annotation.MainThread
@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
+/**
+ *  Created by zxn on 2021/1/19.
+ */
 class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     private val TAG = "SingleLiveEvent"

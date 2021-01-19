@@ -20,7 +20,11 @@ import java.lang.reflect.ParameterizedType
  *  Created by zxn on 2021/1/15.
  */
 abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompatDialogFragment(), IView, IToastView {
-    protected var TAG = this.javaClass.simpleName
+
+    companion object {
+        private const val TAG = "BaseDialogFragment"
+    }
+
     lateinit var mViewModel: VM
     override lateinit var mContext: AppCompatActivity
 
@@ -68,7 +72,7 @@ abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxApp
      * @return
      */
     open fun initTheme(): Int {
-        //return R.style.BaseDialog_FullScreen;
+        //return R.style.BaseDialog_FullScreen
         return R.style.BaseDialog_Nice
     }
 

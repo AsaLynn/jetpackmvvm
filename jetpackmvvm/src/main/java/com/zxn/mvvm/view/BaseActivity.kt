@@ -37,11 +37,8 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
         mContext = this
 
         if (layoutResId != 0) {
-            //setTheme(themeResId)
             setContentView(layoutResId)
         }
-
-//        ARouter.getInstance().inject(this)
 
         if (usedEventBus) {
             registerEventBus(true)
@@ -165,10 +162,6 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
     open fun usedAnimation(): Boolean {
         return true
     }
-
-//    override fun showLoading() {
-//
-//    }
 
     override fun showLoading(msg: String?) {
 
