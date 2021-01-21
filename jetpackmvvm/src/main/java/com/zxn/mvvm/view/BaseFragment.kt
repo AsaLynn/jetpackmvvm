@@ -112,10 +112,8 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
         }
     }
 
-    fun finish() {
-        if (null != activity) {
-            activity!!.finish()
-        }
+    protected open fun finish() {
+        activity?.finish()
     }
 
     override fun onInitImmersionBar() {
@@ -178,12 +176,11 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
 //                        startActivity(clz, bundle)
 //                    }
 //                })
-//        //关闭界面
-//        mViewModel.getUC().getFinishEvent().observe(this, {
-//            setResult(Activity.RESULT_OK)
-//            finish()
-//        })
-//        //关闭上一层
+        //关闭界面
+        mViewModel.getUC().getFinishEvent().observe(this, {
+            finish()
+        })
+        //关闭上一层
 //        mViewModel.getUC().getOnBackPressedEvent().observe(this, {
 //            onBackPressed()
 //        })

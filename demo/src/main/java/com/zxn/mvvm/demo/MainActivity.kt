@@ -32,6 +32,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
             //startActivity(Intent(this, TestActivity::class.java))
             MainDgFragment.newInstance().show(supportFragmentManager)
         }
+
         mViewModel.getData()
     }
 
