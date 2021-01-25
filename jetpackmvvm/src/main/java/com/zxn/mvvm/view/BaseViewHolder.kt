@@ -3,6 +3,8 @@ package com.zxn.mvvm.view
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
@@ -52,4 +54,23 @@ abstract class BaseViewHolder {
 //    init {
 //        initView()
 //    }
+
+    open fun setText(@IdRes viewId: Int, value: CharSequence?): BaseViewHolder {
+        view?.findViewById<TextView>(viewId)?.text = value
+        return this
+    }
+
+    open fun setGone(@IdRes viewId: Int, isGone: Boolean): BaseViewHolder {
+        val view = view?.findViewById<View>(viewId)
+        view?.visibility = if (isGone) View.GONE else View.VISIBLE
+        return this
+    }
+
+    open fun setVisible(@IdRes viewId: Int, isVisible: Boolean): BaseViewHolder {
+        val view = view?.findViewById<View>(viewId)
+        view?.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+        return this
+    }
+
+
 }
