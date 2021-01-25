@@ -72,5 +72,16 @@ abstract class BaseViewHolder {
         return this
     }
 
+    open fun <T : View> getView(@IdRes viewId: Int): T {
+        val v = getViewOrNull<T>(viewId)
+        checkNotNull(v) { "No view found with id $viewId" }
+        return v
+    }
 
+    @Suppress("UNCHECKED_CAST")
+    open fun <T : View> getViewOrNull(@IdRes viewId: Int): T? {
+        //val view = views.get(viewId)
+        val v = view?.findViewById<View>(viewId)
+        return v as? T
+    }
 }
