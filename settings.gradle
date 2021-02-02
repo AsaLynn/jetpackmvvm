@@ -1,2 +1,4 @@
+include ':app'
+include ':JMvvm'
 include ':jetpackmvvm'
 include ':demo'
