@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.trello.rxlifecycle2.components.support.RxFragment
 import com.zxn.mvvm.ext.getVmClazz
 import com.zxn.mvvm.model.IBaseModel
+import com.zxn.mvvm.network.NetState
+import com.zxn.mvvm.network.NetworkStateManager
 import com.zxn.mvvm.viewmodel.BaseViewModel
 import java.lang.reflect.ParameterizedType
 
@@ -18,6 +21,9 @@ import java.lang.reflect.ParameterizedType
  * Updated by zxn on 2020/10/23.
  */
 abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(), IBaseView, ILoadingView {
+
+    //是否第一次加载
+    private var isFirst: Boolean = true
 
     private var mPageTitle = ""
     lateinit var mViewModel: VM
@@ -40,11 +46,19 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
         }
     }
 
+    /**
+     * 网络变化监听 子类重写
+     */
+    open fun onNetworkStateChanged(netState: NetState) {
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = if (layoutResId <= 0) super.onCreateView(inflater, container, savedInstanceState)
     else inflater.inflate(layoutResId, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isFirst = true
 
         if (::mViewModel.isInitialized) {
             createObserver()
@@ -54,6 +68,9 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
         }
 
         onInitView()
+
+        registorDefUIChange()
+        initData()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -186,4 +203,68 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
 //        })
     }
 
+    /**
+     * 注册 UI 事件
+     */
+    private fun registorDefUIChange() {
+        mViewModel.loadingChange.showDialog.observeInFragment(this) {
+            showLoading(it)
+        }
+        mViewModel.loadingChange.dismissDialog.observeInFragment(this) {
+            closeLoading()
+        }
+    }
+
+    /**
+     * Fragment执行onCreate后触发的方法
+     */
+    open fun initData() {}
+
+    /**
+     * 懒加载
+     */
+    abstract fun lazyLoadData()
+
+    override fun onResume() {
+        super.onResume()
+        onVisible()
+    }
+
+    /**
+     * 是否需要懒加载
+     */
+    private fun onVisible() {
+        if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
+            //等待view加载后触发懒加载
+            view?.post {
+                lazyLoadData()
+                //在Fragment中，只有懒加载过了才能开启网络变化监听
+                NetworkStateManager.instance.mNetworkStateCallback.observeInFragment(this) {
+                    //不是首次订阅时调用方法，防止数据第一次监听错误
+                    if (!isFirst) {
+                        onNetworkStateChanged(it)
+                    }
+                }
+                isFirst = false
+            }
+        }
+    }
+
+    /**
+     * 将非该Fragment绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
+     * @param viewModels Array<out BaseViewModel>
+     */
+    protected fun addLoadingObserve(vararg viewModels: BaseViewModel<*>) {
+        viewModels.forEach { viewModel ->
+            //显示弹窗
+            viewModel.loadingChange.showDialog.observeInFragment(this) {
+                showLoading()
+            }
+            //关闭弹窗
+            viewModel.loadingChange.dismissDialog.observeInFragment(this) {
+                //dismissLoading()
+                closeLoading()
+            }
+        }
+    }
 }

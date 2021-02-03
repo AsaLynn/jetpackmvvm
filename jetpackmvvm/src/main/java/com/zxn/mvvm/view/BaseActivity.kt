@@ -12,15 +12,23 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zxn.mvvm.R
 import com.zxn.mvvm.ext.getVmClazz
 import com.zxn.mvvm.model.IBaseModel
+import com.zxn.mvvm.network.NetState
+import com.zxn.mvvm.network.NetworkStateManager
 import com.zxn.mvvm.viewmodel.BaseViewModel
 import com.zxn.utils.UIUtils
 import java.lang.reflect.ParameterizedType
 
 /**
+ *  VM : BaseViewModel<out IBaseModel<*>>
  *  Updated by zxn on 2020/10/23.
  */
 abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompatActivity(), IBaseView,
         ILoadingView {
+
+    /**
+     * 是否需要使用DataBinding 供子类BaseVmDbActivity修改，用户请慎动
+     */
+    private var isUserDb = false
 
     lateinit var mViewModel: VM
     override var cancelable: Boolean = true
@@ -29,7 +37,6 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
     override var usedImmersionBar: Boolean = false
     override var titleBar: View? = null
     override var usedStatusBarDarkFont: Boolean = false
-//    abstract var themeResId: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +55,9 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
             mViewModel = createViewModel()!!
         }
 
+        //加载进度弹框.
+        registerUiChange()
+
         if (isViewModelInitialized()) {
             createObserver()
             //让ViewModel拥有View的生命周期感应
@@ -61,6 +71,10 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
         onInitView()
 
         onInitImmersionBar()
+
+        NetworkStateManager.instance.mNetworkStateCallback.observeInActivity(this) {
+            onNetworkStateChanged(it)
+        }
     }
 
     override fun onDestroy() {
@@ -241,6 +255,53 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
             intent.putExtras(bundle)
         }
         startActivity(intent)
+    }
+
+    /**
+     * 注册UI 事件
+     */
+    private fun registerUiChange() {
+        //显示弹窗
+        mViewModel.loadingChange.showDialog.observeInActivity(this) {
+            showLoading(it)
+        }
+        //关闭弹窗
+        mViewModel.loadingChange.dismissDialog.observeInActivity(this) {
+            //dismissLoading()
+            closeLoading()
+        }
+    }
+
+    /**
+     * 网络变化监听 子类重写
+     */
+    open fun onNetworkStateChanged(netState: NetState) {}
+
+    fun userDataBinding(isUserDb: Boolean) {
+        this.isUserDb = isUserDb
+    }
+
+    /**
+     * 供子类BaseVmDbActivity 初始化Databinding操作
+     */
+    open fun initDataBind() {}
+
+    /**
+     * 将非该Activity绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
+     * @param viewModels Array<out BaseViewModel>
+     */
+    protected fun addLoadingObserve(vararg viewModels: BaseViewModel<*>){
+        viewModels.forEach {viewModel ->
+            //显示弹窗
+            viewModel.loadingChange.showDialog.observeInActivity(this) {
+                showLoading()
+            }
+            //关闭弹窗
+            viewModel.loadingChange.dismissDialog.observeInActivity(this) {
+                //dismissLoading()
+                closeLoading()
+            }
+        }
     }
 
 }

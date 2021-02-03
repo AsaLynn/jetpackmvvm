@@ -1,6 +1,5 @@
 package me.hgj.jetpackmvvm.demo.app.base
 
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import me.hgj.jetpackmvvm.base.activity.BaseVmDbActivity
@@ -10,7 +9,6 @@ import me.hgj.jetpackmvvm.demo.app.event.EventViewModel
 import me.hgj.jetpackmvvm.demo.app.ext.dismissLoadingExt
 import me.hgj.jetpackmvvm.demo.app.ext.showLoadingExt
 import me.hgj.jetpackmvvm.ext.getAppViewModel
-import me.jessyan.autosize.AutoSizeCompat
 
 /**
  * 时间　: 2019/12/21
