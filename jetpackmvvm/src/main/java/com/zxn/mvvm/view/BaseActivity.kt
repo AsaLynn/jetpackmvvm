@@ -55,10 +55,11 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
             mViewModel = createViewModel()!!
         }
 
-        //加载进度弹框.
-        registerUiChange()
+
 
         if (isViewModelInitialized()) {
+            //加载进度弹框.
+            registerUiChange()
             createObserver()
             //让ViewModel拥有View的生命周期感应
             lifecycle.addObserver(mViewModel)

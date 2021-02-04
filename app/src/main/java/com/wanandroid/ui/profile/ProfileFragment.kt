@@ -9,7 +9,7 @@ import com.wanandroid.customui.builddialog.BuildDialog
 import com.wanandroid.customui.builddialog.BuildDialogListener
 import com.wanandroid.customui.commondialog.CommonDialog
 import com.wanandroid.customui.commondialog.CommonDialogListener
-import com.wanandroid.ui.login.RegisterLoginActivity
+import com.wanandroid.ui.login.MyLoginActivity
 import com.wanandroid.ui.readhistory.ReadHistoryActivity
 import com.wanandroid.util.SharedPreferencesData
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -26,9 +26,9 @@ class ProfileFragment : BaseFragment() {
     override fun initView() {
         setOnClickListener()
 //        login.isEnabled = !SharedPreferencesData.isLogin
-        if(SharedPreferencesData.isLogin){
+        if (SharedPreferencesData.isLogin) {
             loginRegister.text = SharedPreferencesData.name
-        }else{
+        } else {
             loginRegister.text = resources.getString(R.string.loginRegister)
         }
     }
@@ -37,10 +37,11 @@ class ProfileFragment : BaseFragment() {
 
     }
 
-    private fun setOnClickListener(){
+    private fun setOnClickListener() {
         login.setOnClickListener {
-            val intent = Intent(App.getContext(), RegisterLoginActivity::class.java)
-            startActivityForResult(intent, 1) // requestCode -> 666
+//            val intent = Intent(App.getContext(), RegisterLoginActivity::class.java)
+//            startActivityForResult(intent, 1) // requestCode -> 666
+            MyLoginActivity.jumpTo(context!!)
         }
         header.setOnClickListener {
             Log.d("ProfileFragment", "header")
@@ -54,13 +55,14 @@ class ProfileFragment : BaseFragment() {
             Log.d("ProfileFragment", "clearCache")
             activity?.let {
                 val mDialog =
-                    CommonDialog(it)
-                mDialog.setViewText("标题","","取消","确定")
+                        CommonDialog(it)
+                mDialog.setViewText("标题", "", "取消", "确定")
                 mDialog.setDialogOnClickListener(object :
-                    CommonDialogListener {
+                        CommonDialogListener {
                     override fun cancelOnClickListener() {
                         mDialog.dismiss()
                     }
+
                     override fun confirmOnClickListener() {
                     }
 
@@ -71,24 +73,24 @@ class ProfileFragment : BaseFragment() {
         }
         aboutAuthor.setOnClickListener {
             Log.d("ProfileFragment", "aboutAuthor")
-            var dialog :BuildDialog? = null
+            var dialog: BuildDialog? = null
             activity?.let {
                 dialog = BuildDialog.Builder(it)
-                    .setTitleText("标题")
-                    .setContentText("内容")
-                    .setCancelText("取消")
-                    .setConfirmText("确定")
-                    .setDialogOnClickListener(object : BuildDialogListener {
-                        override fun cancelOnClickListener() {
-                            dialog?.hide()
-                        }
+                        .setTitleText("标题")
+                        .setContentText("内容")
+                        .setCancelText("取消")
+                        .setConfirmText("确定")
+                        .setDialogOnClickListener(object : BuildDialogListener {
+                            override fun cancelOnClickListener() {
+                                dialog?.hide()
+                            }
 
-                        override fun confirmOnClickListener() {
+                            override fun confirmOnClickListener() {
 
-                        }
+                            }
 
-                    })
-                    .create()
+                        })
+                        .create()
 
                 dialog?.show()
             }

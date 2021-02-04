@@ -7,6 +7,7 @@ package com.wanandroid.model.http
 sealed class ResponseResult<out T : Any> {
 
     data class Success<out T : Any>(val data: T) : ResponseResult<T>()
+
     data class Error(val errorMsg: String) : ResponseResult<Nothing>()
 
     override fun toString(): String {

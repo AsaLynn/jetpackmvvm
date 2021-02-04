@@ -12,10 +12,16 @@ import com.wanandroid.databinding.ActivityRegisterLoginBinding
 import kotlinx.android.synthetic.main.activity_register_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
+/**
+ *
+ *  Created by ny on 2021/2/4.
+ */
 class RegisterLoginActivity : BaseVMActivity() {
+
     private val registerLoginViewModel by viewModel<RegisterLoginViewModel>()
+
     private val binding by binding<ActivityRegisterLoginBinding>(R.layout.activity_register_login)
+
     override fun initView() {
         binding.run {
             viewModel = registerLoginViewModel
@@ -28,15 +34,15 @@ class RegisterLoginActivity : BaseVMActivity() {
     }
 
     override fun startObserve() {
-        registerLoginViewModel.uiState.observe(this@RegisterLoginActivity, Observer{
-            if(it.isLoading){
+        registerLoginViewModel.uiState.observe(this@RegisterLoginActivity, Observer {
+            if (it.isLoading) {
                 showProgressDialog()
-            }else{
+            } else {
                 dismissProgressDialog()
             }
 
-            it.successData.let {it1 ->
-               if(!it1?.username.isNullOrEmpty() && it1?.id.toString().isNotEmpty()){
+            it.successData.let { it1 ->
+                if (!it1?.username.isNullOrEmpty() && it1?.id.toString().isNotEmpty()) {
                     val intent = Intent()
                     setResult(2, intent);
                     finish()
@@ -44,14 +50,14 @@ class RegisterLoginActivity : BaseVMActivity() {
 
             }
             it.showError?.let { it1 ->
-                Toast.makeText(App.getContext(),it1, Toast.LENGTH_SHORT).show()
+                Toast.makeText(App.getContext(), it1, Toast.LENGTH_SHORT).show()
             }
 
         })
     }
 
-    private fun setOnClickListener(){
-        user_edt.setImgEditTextOnTouchListener(object : ImgEditTextListener{
+    private fun setOnClickListener() {
+        user_edt.setImgEditTextOnTouchListener(object : ImgEditTextListener {
             override fun rightImgOnTouchListener(text: String) {
                 user_edt.setText("")
             }
