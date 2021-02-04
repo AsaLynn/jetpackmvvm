@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab_navigation"
+    app:startDestination="@id/homeFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.wanandroid.ui.home.HomeFragment"
+        android:label="HomeFragment" />
+
+    <fragment
+        android:id="@+id/blogFragment"
+        android:name="com.wanandroid.ui.blog.BlogFragment"
+        android:label="BlogFragment" />
+
+    <activity
+        android:id="@+id/searchActivity"
+        android:name="com.wanandroid.ui.search.SearchActivity"
+        android:label="SearchActivity" />
+
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.wanandroid.ui.question.QuestionFragment"
+        android:label="ProjectFragment" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.wanandroid.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
+    <activity
+        android:id="@+id/browserActivity"
+        android:name="com.wanandroid.BrowserActivity"
+        android:label="BrowserActivity"/>
+
+
+</navigation>
