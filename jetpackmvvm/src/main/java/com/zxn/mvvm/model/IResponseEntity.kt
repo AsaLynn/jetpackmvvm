@@ -22,5 +22,8 @@ interface IResponseEntity<T> {
      */
     val message: String
 
-
+    /**
+     * 响应码
+     */
+    val code: Int
 }

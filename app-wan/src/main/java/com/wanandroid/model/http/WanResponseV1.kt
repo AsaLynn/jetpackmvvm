@@ -14,5 +14,7 @@ data class WanResponseV1<T>(val errorCode: Int, val errorMsg: String, val data: 
 
     override val message: String = errorMsg
 
+    override val code: Int = errorCode
+
 
 }
