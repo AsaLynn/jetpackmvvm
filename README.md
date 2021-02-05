@@ -1,11 +1,12 @@
 # MVVMDemo
-MVVMDemo:Android最新架构之MVVM.
+Android最新架构之MVVM.
 
 #### 使用
 ```
 implementation 'com.zxn.mvvm:jetpackmvvm:1.1.6'
-implementation 'com.zxn.mvvm:jetpackmvvm:1.1.1'
 ```
+#### 说明
+基于refroit + livedata + 协程.
 
 #### 参考资料
 https://github.com/trello/RxLifecycle

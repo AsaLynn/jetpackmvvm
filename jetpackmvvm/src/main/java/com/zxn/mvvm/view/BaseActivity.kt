@@ -90,7 +90,7 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
     /**
      * 创建viewModel
      */
-    private fun createViewModel(): VM? {
+    private fun createViewModel(): VM {
         return ViewModelProvider(this).get(getVmClazz(this)!!)
     }
 
@@ -291,8 +291,8 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
      * 将非该Activity绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
      * @param viewModels Array<out BaseViewModel>
      */
-    protected fun addLoadingObserve(vararg viewModels: BaseViewModel<*>){
-        viewModels.forEach {viewModel ->
+    protected fun addLoadingObserve(vararg viewModels: BaseViewModel<*>) {
+        viewModels.forEach { viewModel ->
             //显示弹窗
             viewModel.loadingChange.showDialog.observeInActivity(this) {
                 showLoading()
@@ -302,6 +302,14 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
                 //dismissLoading()
                 closeLoading()
             }
+        }
+    }
+
+    override fun onLoading(isLoading: Boolean) {
+        if (isLoading) {
+            showLoading()
+        } else {
+            closeLoading()
         }
     }
 

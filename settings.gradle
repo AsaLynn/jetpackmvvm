@@ -1,4 +1,4 @@
-include ':app'
+include ':app-wan'
 include ':app-jmvvm'
 include ':JMvvm'
 include ':jetpackmvvm'

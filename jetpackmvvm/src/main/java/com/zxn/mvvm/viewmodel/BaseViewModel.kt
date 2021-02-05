@@ -8,6 +8,7 @@ import com.zxn.mvvm.event.EventLiveData
 import com.zxn.mvvm.event.SingleLiveEvent
 import com.zxn.mvvm.ext.getNewInstance
 import com.zxn.mvvm.model.IBaseModel
+import com.zxn.mvvm.model.http.LoadingModel
 import com.zxn.mvvm.view.ILoadingView
 import com.zxn.mvvm.view.IToastView
 import java.lang.ref.WeakReference
@@ -17,14 +18,28 @@ import java.lang.ref.WeakReference
  */
 abstract class BaseViewModel<M : IBaseModel<*>?> : ViewModel(), LifecycleObserver, ILoadingView, IToastView {
 
+
+    /**
+     * 发出,发射数据.
+     * @param isLoading true:加载中,false:加载结束.
+     * @param showError 错误藐视
+     * @param   successData 发给UI的数据.
+     */
+    fun <T> emitLoading(
+            isLoading: Boolean = false,
+            showError: String? = null,
+            successData: T? = null): LoadingModel<T?> = LoadingModel(isLoading, showError, successData)
+
     /**
      * 内置封装好的可通知Activity/fragment 显示隐藏加载框 因为需要跟网络请求显示隐藏loading配套.
      */
     inner class UiLoadingChange {
         //显示加载框
         val showDialog by lazy { EventLiveData<String>() }
+
         //隐藏
         val dismissDialog by lazy { EventLiveData<Boolean>() }
+
     }
 
     val loadingChange: UiLoadingChange by lazy { UiLoadingChange() }
@@ -198,6 +213,14 @@ abstract class BaseViewModel<M : IBaseModel<*>?> : ViewModel(), LifecycleObserve
         var BUNDLE = "BUNDLE"
         var MSG = "MSG"
         var IS_CANCLE = "IS_CANCLE"
+    }
+
+    override fun onLoading(isLoading: Boolean) {
+        if (isLoading) {
+            showLoading()
+        } else {
+            closeLoading()
+        }
     }
 }
 

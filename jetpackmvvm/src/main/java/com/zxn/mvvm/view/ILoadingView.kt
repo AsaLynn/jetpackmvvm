@@ -10,5 +10,12 @@ interface ILoadingView {
     var cancelable: Boolean
     fun showLoading(msg: String? = null)
     fun showLoading(msgResId: Int)
+
+    /**
+     *处理加载框状态.
+     * @param isLoading true:加载,false:消失.
+     */
+    fun onLoading(isLoading: Boolean)
+
     fun closeLoading()
 }
