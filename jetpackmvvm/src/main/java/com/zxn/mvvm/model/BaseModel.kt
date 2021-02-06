@@ -4,19 +4,6 @@ import com.zxn.mvvm.model.http.ResponseResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 
-/**
- * Copyright(c) ${}YEAR} ZhuLi co.,Ltd All Rights Reserved.
- *
- * @className: BaseModel$
- * @description: TODO 类描述
- * @version: v0.0.1
- * @author: zxn < a href=" ">zhangxiaoning@17biyi.com</ a>
- * @date: 2021/2/5$ 21:09$
- * @updateUser: 更新者：
- * @updateDate: 2021/2/5$ 21:09$
- * @updateRemark: 更新说明：
- * @version: 1.0
- * */
 abstract class BaseModel<T> : IBaseModel<T> {
 
     override fun clear() {
