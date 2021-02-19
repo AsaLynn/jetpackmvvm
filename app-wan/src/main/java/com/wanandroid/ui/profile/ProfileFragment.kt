@@ -14,7 +14,6 @@ import com.wanandroid.ui.readhistory.ReadHistoryActivity
 import com.wanandroid.util.SharedPreferencesData
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-
 /**
  * Created by Donkey
  * on 3:18 PM
@@ -50,6 +49,7 @@ class ProfileFragment : BaseFragment() {
             Log.d("ProfileFragment", "readHistory")
             val intent = Intent(App.getContext(), ReadHistoryActivity::class.java)
             startActivity(intent)
+//            MyReadHistoryActivity.jumpTo(it.context)
         }
         clearCache.setOnClickListener {
             Log.d("ProfileFragment", "clearCache")

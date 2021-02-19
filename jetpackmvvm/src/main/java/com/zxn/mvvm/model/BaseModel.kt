@@ -17,6 +17,7 @@ abstract class BaseModel<T> : IBaseModel<T> {
         return try {
             call()
         } catch (e: Exception) {
+            e.printStackTrace()
             ResponseResult.Error(errorMessage)
         }
     }
@@ -29,12 +30,13 @@ abstract class BaseModel<T> : IBaseModel<T> {
                                                errorBlock: (suspend CoroutineScope.() -> Unit)? = null): ResponseResult<T> {
         return coroutineScope {
             if (response.succeed()) {
+                successBlock?.let { it() }
+                ResponseResult.Success(response.getEntity())
+            } else {
                 errorBlock?.let { it() }
                 ResponseResult.Error(response.message)
-            } else {
-                successBlock?.let { it() }
-                ResponseResult.Success(response.dataEntity)
             }
         }
     }
+
 }

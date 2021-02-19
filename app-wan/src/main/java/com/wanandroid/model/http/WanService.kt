@@ -14,6 +14,10 @@ interface WanService {
 
     @FormUrlEncoded
     @POST("/user/login")
+    suspend fun loginV2(@Field("username") userName: String, @Field("password") passWord: String): WanResponse<User>
+
+    @FormUrlEncoded
+    @POST("/user/login")
     suspend fun loginV1(@Field("username") userName: String, @Field("password") passWord: String): WanResponseV1<User>
 
     @FormUrlEncoded

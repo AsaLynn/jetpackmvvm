@@ -33,8 +33,10 @@ class MyLoginViewModel : BaseViewModel<WanAndroidModel>() {
             if (result is ResponseResult.Success) {
                 Log.d("MyLoginViewModel", result.data.toString())
                 val user: User = result.data
-                SharedPreferencesData.name = user.username
-                SharedPreferencesData.password = user.password
+                user?.let {
+                    SharedPreferencesData.name = user.username
+                    SharedPreferencesData.password = user.password
+                }
                 SharedPreferencesData.isLogin = true
                 emitLoading(isLoading = false, successData = user).run {
                     mLoadingDataEvent.postValue(this)
@@ -47,8 +49,4 @@ class MyLoginViewModel : BaseViewModel<WanAndroidModel>() {
             }
         }
     }
-
-
-
-
 }

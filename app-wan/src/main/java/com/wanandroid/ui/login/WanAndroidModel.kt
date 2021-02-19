@@ -1,5 +1,6 @@
 package com.wanandroid.ui.login
 
+import android.util.Log
 import com.wanandroid.model.http.WanRetrofitClient
 import com.wanandroid.model.http.WanService
 import com.wanandroid.model.repository.LoginRepository
@@ -27,12 +28,11 @@ class WanAndroidModel : BaseModel<WanService>() {
 
     private suspend fun requestLogin(userName: String, passWord: String): ResponseResult<User> {
         val response = WanRetrofitClient.service.loginV1(userName, passWord)
-        /*return executeResponse(response, {
+        return executeResponse(response, {
             Log.d(TAG, "请求成功的回调  $response")
-        }, { Log.d(TAG, "请求失败的回调  $response") })*/
-        return executeResponse(response, null, null)
+        }, { Log.d(TAG, "请求失败的回调  $response") })
+        //return executeResponse(response, null, null)
     }
-
 
 }
 

@@ -18,7 +18,6 @@ import java.lang.ref.WeakReference
  */
 abstract class BaseViewModel<M : IBaseModel<*>?> : ViewModel(), LifecycleObserver, ILoadingView, IToastView {
 
-
     /**
      * 发出,发射数据.
      * @param isLoading true:加载中,false:加载结束.
@@ -28,7 +27,10 @@ abstract class BaseViewModel<M : IBaseModel<*>?> : ViewModel(), LifecycleObserve
     fun <T> emitLoading(
             isLoading: Boolean = false,
             showError: String? = null,
-            successData: T? = null): LoadingModel<T?> = LoadingModel(isLoading, showError, successData)
+            successData: T? = null,
+            isRefresh: Boolean = false,
+            showEnd: Boolean = false,
+    ): LoadingModel<T?> = LoadingModel(isLoading, showError, successData, isRefresh = isRefresh, showEnd = showEnd)
 
     /**
      * 内置封装好的可通知Activity/fragment 显示隐藏加载框 因为需要跟网络请求显示隐藏loading配套.

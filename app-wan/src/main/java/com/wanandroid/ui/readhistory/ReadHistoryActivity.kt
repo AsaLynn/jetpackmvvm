@@ -16,7 +16,9 @@ import com.wanandroid.view.CustomLoadMoreView
 import kotlinx.android.synthetic.main.activity_read_history.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
+/**
+ * MyReadHistoryActivity
+ */
 class ReadHistoryActivity : BaseVMActivity() {
 
     private val binding  by binding<ActivityReadHistoryBinding>(R.layout.activity_read_history)
