@@ -65,11 +65,11 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
             lifecycle.addObserver(mViewModel)
             mViewModel.injectLifecycleProvider(this)
             registorUIChangeLiveDataCallBack()
+            registorDefUIChange()
         }
 
         onInitView()
 
-        registorDefUIChange()
         initData()
     }
 

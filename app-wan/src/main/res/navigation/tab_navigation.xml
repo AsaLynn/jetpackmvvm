@@ -30,10 +30,22 @@
         android:id="@+id/profileFragment"
         android:name="com.wanandroid.ui.profile.ProfileFragment"
         android:label="ProfileFragment" />
+
     <activity
         android:id="@+id/browserActivity"
         android:name="com.wanandroid.BrowserActivity"
         android:label="BrowserActivity"/>
 
-
 </navigation>
+
+<!--
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.wanandroid.ui.question.QuestionFragment"
+        android:label="ProjectFragment" />
+-->
+
+<!--<fragment
+        android:id="@+id/questionFragment"
+        android:name="com.wanandroid.ui.question.MyQuestionFragment"
+        android:label="ProjectFragment" />-->

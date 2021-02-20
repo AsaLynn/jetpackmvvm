@@ -7,13 +7,14 @@ import android.util.Log
 import android.widget.Toast
 import com.wanandroid.App
 import com.wanandroid.R
+import com.wanandroid.base.MyBaseActivity
 import com.zxn.mvvm.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_my_login.*
 
 /**
  *  Created by ny on 2021/2/4.
  */
-class MyLoginActivity : BaseActivity<MyLoginViewModel>() {
+class MyLoginActivity : MyBaseActivity<MyLoginViewModel>() {
 
     companion object {
         @JvmStatic
@@ -23,8 +24,6 @@ class MyLoginActivity : BaseActivity<MyLoginViewModel>() {
 
         private const val TAG = "MyLoginActivity"
     }
-
-    override fun registerEventBus(isRegister: Boolean) {}
 
     override val layoutResId: Int = R.layout.activity_my_login
 

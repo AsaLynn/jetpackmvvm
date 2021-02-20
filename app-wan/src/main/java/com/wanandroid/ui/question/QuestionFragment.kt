@@ -86,5 +86,4 @@ class QuestionFragment : BaseVMFragment<QuestionProjectBinding>(R.layout.questio
             }
         })
     }
-
 }

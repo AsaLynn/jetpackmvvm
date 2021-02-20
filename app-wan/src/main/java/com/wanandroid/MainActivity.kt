@@ -4,18 +4,15 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.wanandroid.base.MyBaseActivity
 
-class MainActivity : com.zxn.mvvm.view.BaseActivity<Nothing>() {
+class MainActivity : MyBaseActivity<Nothing>() {
 
     lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-    }
-
-    override fun registerEventBus(isRegister: Boolean) {
-
     }
 
     override val layoutResId: Int = R.layout.activity_main
@@ -26,10 +23,4 @@ class MainActivity : com.zxn.mvvm.view.BaseActivity<Nothing>() {
         val navController = host.navController
         bottomNavigationView.setupWithNavController(navController)
     }
-
-    override fun createObserver() {
-
-    }
-
-
 }

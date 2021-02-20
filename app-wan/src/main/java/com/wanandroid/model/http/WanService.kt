@@ -52,6 +52,9 @@ interface WanService {
     suspend fun getBlogArticleList(  @Path("page") page: Int,@Path("id") id: Int): WanResponse<ArticleList>
 
     @GET("/wenda/list/{page}/json")
+    suspend fun getQuestionsV1(@Path("page") page: Int): WanResponseV1<ArticleList>
+
+    @GET("/wenda/list/{page}/json")
     suspend fun getQuestions(@Path("page") page: Int): WanResponse<ArticleList>
 
     @GET("/hotkey/json")

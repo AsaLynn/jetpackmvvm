@@ -4,6 +4,7 @@ import android.util.Log
 import com.wanandroid.model.http.WanRetrofitClient
 import com.wanandroid.model.http.WanService
 import com.wanandroid.model.repository.LoginRepository
+import com.wanandroid.model.resultbean.ArticleList
 import com.wanandroid.model.resultbean.User
 import com.zxn.mvvm.model.BaseModel
 import com.zxn.mvvm.model.http.ResponseResult
@@ -32,6 +33,15 @@ class WanAndroidModel : BaseModel<WanService>() {
             Log.d(TAG, "请求成功的回调  $response")
         }, { Log.d(TAG, "请求失败的回调  $response") })
         //return executeResponse(response, null, null)
+    }
+
+    suspend fun getQuestionList(page: Int): ResponseResult<ArticleList> {
+        return safeApiCall(call = { requestQuestionList(page) }, errorMessage = "")
+    }
+
+    private suspend fun requestQuestionList(page: Int): ResponseResult<ArticleList> {
+        val response = WanRetrofitClient.service.getQuestionsV1(page)
+        return executeResponse(response)
     }
 
 }
