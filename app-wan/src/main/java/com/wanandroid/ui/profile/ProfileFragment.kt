@@ -5,6 +5,7 @@ import android.util.Log
 import com.wanandroid.App
 import com.wanandroid.R
 import com.wanandroid.base.BaseFragment
+import com.wanandroid.base.MyBaseFragment
 import com.wanandroid.customui.builddialog.BuildDialog
 import com.wanandroid.customui.builddialog.BuildDialogListener
 import com.wanandroid.customui.commondialog.CommonDialog
@@ -19,8 +20,9 @@ import kotlinx.android.synthetic.main.fragment_profile.*
  * on 3:18 PM
  */
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
-class ProfileFragment : BaseFragment() {
-    override fun getLayoutResId() = R.layout.fragment_profile
+class ProfileFragment : MyBaseFragment<Nothing>() {
+
+//    override fun getLayoutResId() = R.layout.fragment_profile
 
     override fun initView() {
         setOnClickListener()
@@ -110,5 +112,8 @@ class ProfileFragment : BaseFragment() {
             }
         }
     }
+
+    override val layoutResId: Int
+        get() = R.layout.fragment_profile
 }
 

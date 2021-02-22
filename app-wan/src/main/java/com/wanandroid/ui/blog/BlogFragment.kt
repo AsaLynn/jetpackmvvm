@@ -1,12 +1,10 @@
 package com.wanandroid.ui.blog
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.wanandroid.R
-import com.wanandroid.base.BaseFragment
 import com.wanandroid.base.BaseVMFragment
 import com.wanandroid.databinding.FragmentBlogBinding
 import com.wanandroid.model.resultbean.BlogType
