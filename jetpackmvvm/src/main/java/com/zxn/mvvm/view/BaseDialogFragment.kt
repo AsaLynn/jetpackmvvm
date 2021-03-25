@@ -89,16 +89,16 @@ abstract class BaseDialogFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxApp
     }
 
     override fun showToast(msg: Int) {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity!!.showToast(msg)
+        if (activity is BaseActivity/*<*>*/) {
+            val activity = activity as BaseActivity/*<*>?*/
+            activity.showToast(msg)
         }
     }
 
     override fun showToast(msg: String) {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity!!.showToast(msg)
+        if (activity is BaseActivity/*<*>*/) {
+            val activity = activity as BaseActivity/*<*>?*/
+            activity.showToast(msg)
         }
     }
 

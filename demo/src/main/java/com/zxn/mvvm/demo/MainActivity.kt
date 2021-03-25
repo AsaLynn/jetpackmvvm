@@ -11,7 +11,7 @@ import java.util.*
 /**
  *  Created by zxn on 2021/1/14.
  */
-class MainActivity : BaseActivity<MainViewModel>() {
+class MainActivity : BaseActivity/*<MainViewModel>*/() {
 
     override var usedEventBus: Boolean = true
 
@@ -33,7 +33,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
             MainDgFragment.newInstance().show(supportFragmentManager)
         }
 
-        mViewModel.getData()
+//        mViewModel.getData()
     }
 
     override val layoutResId: Int = R.layout.activity_main

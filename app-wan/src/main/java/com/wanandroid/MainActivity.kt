@@ -6,7 +6,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.wanandroid.base.MyBaseActivity
 
-class MainActivity : MyBaseActivity<Nothing>() {
+class MainActivity : MyBaseActivity/*<Nothing>*/() {
 
     lateinit var bottomNavigationView: BottomNavigationView
 

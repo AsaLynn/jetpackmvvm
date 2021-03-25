@@ -61,4 +61,12 @@ class MyMainFragment : BaseFragment<Nothing>() {
 
     override fun createObserver() {
     }
+
+    override fun onLoading(isLoading: Boolean) {
+
+    }
+
+    override fun lazyLoadData() {
+
+    }
 }

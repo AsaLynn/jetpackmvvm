@@ -16,11 +16,10 @@ import com.wanandroid.util.SharedPreferencesData
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 /**
- * Created by Donkey
- * on 3:18 PM
+ *
  */
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
-class ProfileFragment : MyBaseFragment<Nothing>() {
+class ProfileFragment : MyBaseFragment/*<Nothing>*/() {
 
 //    override fun getLayoutResId() = R.layout.fragment_profile
 

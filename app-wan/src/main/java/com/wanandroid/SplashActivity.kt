@@ -8,7 +8,7 @@ import com.wanandroid.base.MyBaseActivity
  * Created by Donkey
  * on 2020/9/15
  */
-class SplashActivity : MyBaseActivity<Nothing>() {
+class SplashActivity : MyBaseActivity/*<Nothing>*/() {
 
 //    override fun getLayoutResId() = R.layout.activity_splash
 

@@ -4,15 +4,19 @@ import android.content.Context
 import android.content.Intent
 import com.wanandroid.R
 import com.wanandroid.adapter.MyBaseBindAdapter
+import com.wanandroid.ui.login.MyLoginViewModel
 import com.zxn.mvvm.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_read_history.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  *
  * MyReadHistoryViewModel
  * 阅读历史新版本.
  */
-class MyReadHistoryActivity : BaseActivity<MyReadHistoryViewModel>() {
+class MyReadHistoryActivity : BaseActivity/*<MyReadHistoryViewModel>*/() {
+
+    private val mViewModel by viewModel<MyReadHistoryViewModel>()
 
     companion object {
         @JvmStatic

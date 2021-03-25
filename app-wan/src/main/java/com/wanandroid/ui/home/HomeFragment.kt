@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * Created by Donkey
  * on 3:18 PM
  */
-class HomeFragment : MyBaseFragment<Nothing>() {
+class HomeFragment : MyBaseFragment/*<Nothing>*/() {
     private val titleList = arrayListOf("首页", "导航", "项目", "广场", "体系")
     private val fragmentList = arrayListOf<Fragment>()
     private val firstFragment by lazy { FirstFragment() } //首页

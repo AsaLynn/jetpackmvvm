@@ -20,13 +20,13 @@ import java.lang.reflect.ParameterizedType
 /**
  * Updated by zxn on 2020/10/23.
  */
-abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(), IBaseView, ILoadingView {
+abstract class BaseFragment/*<VM : BaseViewModel<out IBaseModel<*>>> */: RxFragment(), IBaseView, ILoadingView {
 
     //是否第一次加载
     private var isFirst: Boolean = true
 
     private var mPageTitle = ""
-    lateinit var mViewModel: VM
+//    lateinit var mViewModel: VM
     override var titleBar: View? = null
     override var usedImmersionBar: Boolean = false
     override var usedStatusBarDarkFont: Boolean = false
@@ -41,9 +41,9 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (this.javaClass.genericSuperclass is ParameterizedType) {
+        /*if (this.javaClass.genericSuperclass is ParameterizedType) {
             mViewModel = createViewModel()
-        }
+        }*/
     }
 
     /**
@@ -60,13 +60,13 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
         super.onViewCreated(view, savedInstanceState)
         isFirst = true
 
-        if (::mViewModel.isInitialized) {
+        //if (::mViewModel.isInitialized) {
             createObserver()
-            lifecycle.addObserver(mViewModel)
-            mViewModel.injectLifecycleProvider(this)
-            registorUIChangeLiveDataCallBack()
-            registorDefUIChange()
-        }
+            //lifecycle.addObserver(mViewModel)
+            //mViewModel.injectLifecycleProvider(this)
+            //registorUIChangeLiveDataCallBack()
+            //registorDefUIChange()
+        //}
 
         onInitView()
 
@@ -84,48 +84,48 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
         super.onDestroy()
     }
 
-    /**
-     * 创建viewModel
-     */
-    private fun createViewModel(): VM {
-        return ViewModelProvider(this).get(getVmClazz(this)!!)
-    }
+//    /**
+//     * 创建viewModel
+//     */
+//    private fun createViewModel(): VM {
+//        return ViewModelProvider(this).get(getVmClazz(this)!!)
+//    }
 
     val pageTitle: CharSequence = mPageTitle
 
     override fun showLoading(msg: String?) {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity?.showLoading(msg)
+        if (activity is BaseActivity/*<*>*/) {
+            val activity = activity as BaseActivity/*<*>?*/
+            activity.showLoading(msg)
         }
     }
 
     override fun showLoading(msgResId: Int) {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity!!.showLoading(msgResId)
+        if (activity is BaseActivity/*<*>*/) {
+            val activity = activity as BaseActivity/*<*>?*/
+            activity.showLoading(msgResId)
         }
     }
 
 
     override fun closeLoading() {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity!!.closeLoading()
+        if (activity is BaseActivity/*<*>*/) {
+            val activity = activity as BaseActivity/*<*>?*/
+            activity.closeLoading()
         }
     }
 
     override fun showToast(msg: Int) {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity!!.showToast(msg)
+        if (activity is BaseActivity/*<*>*/) {
+            val activity = activity as BaseActivity/*<*>?*/
+            activity.showToast(msg)
         }
     }
 
     override fun showToast(msg: String) {
-        if (activity is BaseActivity<*>) {
-            val activity = activity as BaseActivity<*>?
-            activity!!.showToast(msg)
+        if (activity is BaseActivity/*<*>*/) {
+            val activity = activity as BaseActivity/*<*>?*/
+            activity.showToast(msg)
         }
     }
 
@@ -156,34 +156,34 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
                 .init()
     }
 
-    /**
-     * 注册ViewModel与View的契约UI回调事件
-     */
-    private fun registorUIChangeLiveDataCallBack() {
-        //加载对话框显示
-        mViewModel.getUC().getShowLoadingEvent().observe(this, {
-            //showLoadingUI(it[BaseViewModel.ParameterField.MSG].toString(), it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean)
-            cancelable = it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean
-            if (it[BaseViewModel.ParameterField.MSG] is String) {
-                showLoading(it[BaseViewModel.ParameterField.MSG] as String)
-            }
-            if (it[BaseViewModel.ParameterField.MSG] is Int) {
-                showLoading(it[BaseViewModel.ParameterField.MSG] as Int)
-            }
-        })
-        //加载对话框消失
-        mViewModel.getUC().getHideLoadingEvent().observe(this, {
-            closeLoading()
-        })
-        //Toast显示
-        mViewModel.getUC().getShowToastEvent().observe(this, {
-            if (it is String) {
-                showToast(it)
-            }
-            if (it is Int) {
-                showToast(it)
-            }
-        })
+//    /**
+//     * 注册ViewModel与View的契约UI回调事件
+//     */
+//    private fun registorUIChangeLiveDataCallBack() {
+//        //加载对话框显示
+//        mViewModel.getUC().getShowLoadingEvent().observe(this, {
+//            //showLoadingUI(it[BaseViewModel.ParameterField.MSG].toString(), it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean)
+//            cancelable = it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean
+//            if (it[BaseViewModel.ParameterField.MSG] is String) {
+//                showLoading(it[BaseViewModel.ParameterField.MSG] as String)
+//            }
+//            if (it[BaseViewModel.ParameterField.MSG] is Int) {
+//                showLoading(it[BaseViewModel.ParameterField.MSG] as Int)
+//            }
+//        })
+//        //加载对话框消失
+//        mViewModel.getUC().getHideLoadingEvent().observe(this, {
+//            closeLoading()
+//        })
+//        //Toast显示
+//        mViewModel.getUC().getShowToastEvent().observe(this, {
+//            if (it is String) {
+//                showToast(it)
+//            }
+//            if (it is Int) {
+//                showToast(it)
+//            }
+//        })
 //        //跳入新页面
 //        mViewModel.getUC().getStartActivityEvent()
 //                .observe(this, {
@@ -193,27 +193,27 @@ abstract class BaseFragment<VM : BaseViewModel<out IBaseModel<*>>> : RxFragment(
 //                        startActivity(clz, bundle)
 //                    }
 //                })
-        //关闭界面
-        mViewModel.getUC().getFinishEvent().observe(this, {
-            finish()
-        })
+//        //关闭界面
+//        mViewModel.getUC().getFinishEvent().observe(this, {
+//            finish()
+//        })
         //关闭上一层
 //        mViewModel.getUC().getOnBackPressedEvent().observe(this, {
 //            onBackPressed()
 //        })
-    }
+//    }
 
-    /**
-     * 注册 UI 事件
-     */
-    private fun registorDefUIChange() {
-        mViewModel.loadingChange.showDialog.observeInFragment(this) {
-            showLoading(it)
-        }
-        mViewModel.loadingChange.dismissDialog.observeInFragment(this) {
-            closeLoading()
-        }
-    }
+//    /**
+//     * 注册 UI 事件
+//     */
+//    private fun registorDefUIChange() {
+//        mViewModel.loadingChange.showDialog.observeInFragment(this) {
+//            showLoading(it)
+//        }
+//        mViewModel.loadingChange.dismissDialog.observeInFragment(this) {
+//            closeLoading()
+//        }
+//    }
 
     /**
      * Fragment执行onCreate后触发的方法

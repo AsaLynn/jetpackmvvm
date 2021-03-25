@@ -5,10 +5,9 @@ import com.wanandroid.base.BaseFragment
 import com.wanandroid.base.MyBaseFragment
 
 /**
- * Created by Donkey
- * on 3:18 PM
+ *
  */
-class SystemFragment : MyBaseFragment<Nothing>() {
+class SystemFragment : MyBaseFragment/*<Nothing>*/() {
     //override fun getLayoutResId() = R.layout.fragment_system
 
     override fun initView() {
@@ -17,6 +16,5 @@ class SystemFragment : MyBaseFragment<Nothing>() {
     override fun initData() {
     }
 
-    override val layoutResId: Int
-        get() = R.layout.fragment_system
+    override val layoutResId: Int = R.layout.fragment_system
 }

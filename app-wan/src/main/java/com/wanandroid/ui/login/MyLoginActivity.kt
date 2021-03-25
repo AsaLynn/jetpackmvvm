@@ -10,11 +10,14 @@ import com.wanandroid.R
 import com.wanandroid.base.MyBaseActivity
 import com.zxn.mvvm.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_my_login.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  *  Created by ny on 2021/2/4.
  */
-class MyLoginActivity : MyBaseActivity<MyLoginViewModel>() {
+class MyLoginActivity : MyBaseActivity/*<MyLoginViewModel>*/() {
+
+    private val mViewModel by viewModel<MyLoginViewModel>()
 
     companion object {
         @JvmStatic
@@ -45,7 +48,6 @@ class MyLoginActivity : MyBaseActivity<MyLoginViewModel>() {
                     Toast.makeText(mContext, "登录成功", Toast.LENGTH_LONG).show()
                     finish()
                 }
-
             }
             it.showError?.let { it1 ->
                 Toast.makeText(App.getContext(), it1, Toast.LENGTH_SHORT).show()

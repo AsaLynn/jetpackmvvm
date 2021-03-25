@@ -1,28 +1,22 @@
 package com.zxn.mvvm.view
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zxn.mvvm.R
-import com.zxn.mvvm.ext.getVmClazz
-import com.zxn.mvvm.model.IBaseModel
 import com.zxn.mvvm.network.NetState
 import com.zxn.mvvm.network.NetworkStateManager
 import com.zxn.mvvm.viewmodel.BaseViewModel
 import com.zxn.utils.UIUtils
-import java.lang.reflect.ParameterizedType
 
 /**
  *  VM : BaseViewModel<out IBaseModel<*>>
  *  Updated by zxn on 2020/10/23.
  */
-abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompatActivity(), IBaseView,
+abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCompatActivity(), IBaseView,
         ILoadingView {
 
     /**
@@ -30,7 +24,7 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
      */
     private var isUserDb = false
 
-    lateinit var mViewModel: VM
+//    lateinit var mViewModel: VM
     override var cancelable: Boolean = true
     override lateinit var mContext: AppCompatActivity
     override var usedEventBus: Boolean = false
@@ -51,23 +45,23 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
             registerEventBus(true)
         }
 
-        if (this.javaClass.genericSuperclass is ParameterizedType) {
-            mViewModel = createViewModel()!!
-        }
+//        if (this.javaClass.genericSuperclass is ParameterizedType) {
+//            mViewModel = createViewModel()!!
+//        }
 
 
 
-        if (isViewModelInitialized()) {
+//        if (isViewModelInitialized()) {
             //加载进度弹框.
-            registerUiChange()
+//            registerUiChange()
             createObserver()
-            //让ViewModel拥有View的生命周期感应
-            lifecycle.addObserver(mViewModel)
+//            //让ViewModel拥有View的生命周期感应
+//            lifecycle.addObserver(mViewModel)
             //注入RxLifecycle生命周期
-            mViewModel.injectLifecycleProvider(this)
+//            mViewModel.injectLifecycleProvider(this)
             //私有的ViewModel与View的契约事件回调逻辑
-            registorUIChangeLiveDataCallBack()
-        }
+//            registorUIChangeLiveDataCallBack()
+//        }
 
         onInitView()
 
@@ -82,17 +76,17 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
         registerEventBus(false)
         super.onDestroy()
         //解除ViewModel生命周期感应
-        if (isViewModelInitialized()) {
-            lifecycle.removeObserver(mViewModel)
-        }
+//        if (isViewModelInitialized()) {
+//            //lifecycle.removeObserver(mViewModel)
+//        }
     }
 
-    /**
-     * 创建viewModel
-     */
-    private fun createViewModel(): VM {
-        return ViewModelProvider(this).get(getVmClazz(this)!!)
-    }
+//    /**
+//     * 创建viewModel
+//     */
+//    private fun createViewModel(): VM {
+//        return ViewModelProvider(this).get(getVmClazz(this)!!)
+//    }
 
     /**
      * 启动页面
@@ -190,59 +184,59 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
 
     }
 
-    open fun isViewModelInitialized(): Boolean = ::mViewModel.isInitialized
+//    open fun isViewModelInitialized(): Boolean = ::mViewModel.isInitialized
 
     companion object {
         private val TAG = BaseActivity::class.java.simpleName
     }
 
-    /**
-     * 注册ViewModel与View的契约UI回调事件
-     */
-    private fun registorUIChangeLiveDataCallBack() {
-        //加载对话框显示
-        mViewModel.getUC().getShowLoadingEvent().observe(this, {
-            //showLoadingUI(it[BaseViewModel.ParameterField.MSG].toString(), it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean)
-            cancelable = it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean
-            if (it[BaseViewModel.ParameterField.MSG] is String) {
-                showLoading(it[BaseViewModel.ParameterField.MSG] as String)
-            }
-            if (it[BaseViewModel.ParameterField.MSG] is Int) {
-                showLoading(it[BaseViewModel.ParameterField.MSG] as Int)
-            }
-        })
-        //加载对话框消失
-        mViewModel.getUC().getHideLoadingEvent().observe(this, {
-            closeLoading()
-        })
-        //Toast显示
-        mViewModel.getUC().getShowToastEvent().observe(this, {
-            if (it is String) {
-                showToast(it)
-            }
-            if (it is Int) {
-                showToast(it)
-            }
-        })
-        //跳入新页面
-        mViewModel.getUC().getStartActivityEvent()
-                .observe(this, {
-                    fun onChanged(@Nullable params: Map<String, Any>) {
-                        val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>
-                        val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle
-                        startActivity(clz, bundle)
-                    }
-                })
-        //关闭界面
-        mViewModel.getUC().getFinishEvent().observe(this, {
-            setResult(Activity.RESULT_OK)
-            finish()
-        })
-        //关闭上一层
-        mViewModel.getUC().getOnBackPressedEvent().observe(this, {
-            onBackPressed()
-        })
-    }
+//    /**
+//     * 注册ViewModel与View的契约UI回调事件
+//     */
+//    private fun registorUIChangeLiveDataCallBack() {
+//        //加载对话框显示
+//        mViewModel.getUC().getShowLoadingEvent().observe(this, {
+//            //showLoadingUI(it[BaseViewModel.ParameterField.MSG].toString(), it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean)
+//            cancelable = it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean
+//            if (it[BaseViewModel.ParameterField.MSG] is String) {
+//                showLoading(it[BaseViewModel.ParameterField.MSG] as String)
+//            }
+//            if (it[BaseViewModel.ParameterField.MSG] is Int) {
+//                showLoading(it[BaseViewModel.ParameterField.MSG] as Int)
+//            }
+//        })
+//        //加载对话框消失
+//        mViewModel.getUC().getHideLoadingEvent().observe(this, {
+//            closeLoading()
+//        })
+//        //Toast显示
+//        mViewModel.getUC().getShowToastEvent().observe(this, {
+//            if (it is String) {
+//                showToast(it)
+//            }
+//            if (it is Int) {
+//                showToast(it)
+//            }
+//        })
+//        //跳入新页面
+//        mViewModel.getUC().getStartActivityEvent()
+//                .observe(this, {
+//                    fun onChanged(@Nullable params: Map<String, Any>) {
+//                        val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>
+//                        val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle
+//                        startActivity(clz, bundle)
+//                    }
+//                })
+//        //关闭界面
+//        mViewModel.getUC().getFinishEvent().observe(this, {
+//            setResult(Activity.RESULT_OK)
+//            finish()
+//        })
+//        //关闭上一层
+//        mViewModel.getUC().getOnBackPressedEvent().observe(this, {
+//            onBackPressed()
+//        })
+//    }
 
     /**
      * 跳转页面
@@ -258,20 +252,20 @@ abstract class BaseActivity<VM : BaseViewModel<out IBaseModel<*>>> : RxAppCompat
         startActivity(intent)
     }
 
-    /**
-     * 注册UI 事件
-     */
-    private fun registerUiChange() {
-        //显示弹窗
-        mViewModel.loadingChange.showDialog.observeInActivity(this) {
-            showLoading(it)
-        }
-        //关闭弹窗
-        mViewModel.loadingChange.dismissDialog.observeInActivity(this) {
-            //dismissLoading()
-            closeLoading()
-        }
-    }
+//    /**
+//     * 注册UI 事件
+//     */
+//    private fun registerUiChange() {
+//        //显示弹窗
+//        mViewModel.loadingChange.showDialog.observeInActivity(this) {
+//            showLoading(it)
+//        }
+//        //关闭弹窗
+//        mViewModel.loadingChange.dismissDialog.observeInActivity(this) {
+//            //dismissLoading()
+//            closeLoading()
+//        }
+//    }
 
     /**
      * 网络变化监听 子类重写

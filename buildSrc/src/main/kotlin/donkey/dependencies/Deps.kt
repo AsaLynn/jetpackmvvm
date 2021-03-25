@@ -5,10 +5,10 @@
 package donkey.dependencies
 
 object Versions {
-    const val compileSdk = 29
-    const val buildTools = "29.0.3"
+    const val compileSdk = 30
+    const val buildTools = "30.0.3"
     const val minSdk = 21
-    const val targetSdk = 29
+    const val targetSdk = 30
     const val versionCode = 1
     const val versionName = "1.0"
     const val kotlin = "1.3.72"

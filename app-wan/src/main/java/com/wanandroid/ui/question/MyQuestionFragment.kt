@@ -8,17 +8,21 @@ import com.wanandroid.App
 import com.wanandroid.R
 import com.wanandroid.adapter.MyQuestionAdapter
 import com.wanandroid.binding.isRefresh
+import com.wanandroid.ui.readhistory.MyReadHistoryViewModel
 import com.zxn.mvvm.view.BaseFragment
 import kotlinx.android.synthetic.main.question_project.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * MyQuestionViewModel
  * MyQuestionFragment
  * A simple [Fragment] subclass.
  */
-class MyQuestionFragment : BaseFragment<MyQuestionViewModel>() {
+class MyQuestionFragment : BaseFragment/*<MyQuestionViewModel>*/() {
 
     private val questionArticleAdapter by lazy { MyQuestionAdapter() }
+
+    private val mViewModel by viewModel<MyQuestionViewModel>()
 
     override fun lazyLoadData() {
 
