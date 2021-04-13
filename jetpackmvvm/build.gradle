@@ -2,13 +2,13 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'org.jetbrains.dokka'
-    id 'com.github.dcendents.android-maven'
-    id 'com.jfrog.bintray'
     id 'kotlin-kapt'
+    id 'com.github.dcendents.android-maven'
 }
 
 version = "1.2.4"
+
+group = "zxnsto"
 
 android {
     compileSdkVersion 30
@@ -86,121 +86,4 @@ dependencies {
 
     api rootProject.ext.dependencies["rxlifecycle"]
     api rootProject.ext.dependencies["rxlifecycle_components"]
-
-//    // viewModel
-//    api "androidx.fragment:fragment-ktx:1.2.5"
-//    // liveData
-//    api "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
-//    api 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
-//    //navigation
-//    api 'androidx.navigation:navigation-runtime-ktx:2.3.1'
-//    //retrofit
-//    api "com.squareup.retrofit2:retrofit:2.9.0"
-//    api "com.squareup.retrofit2:converter-gson:2.9.0"
-//    api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-//    //动态替换BaseUrl库 使用可参考 https://github.com/JessYanCoding/RetrofitUrlManager
-//    api 'me.jessyan:retrofit-url-manager:1.4.0'
-
-
-//    api 'com.google.code.gson:gson:2.8.6'
-//    api rootProject.ext.dependencies["multidex"]
-//    api rootProject.ext.dependencies["immersionbar"]
-//    api rootProject.ext.dependencies["immersionbar_components"]
-//    api rootProject.ext.dependencies["immersionbar_ktx"]
-//    api rootProject.ext.dependencies["lifecycle_extensions"]
-//    api rootProject.ext.dependencies["autosize"]
-//    api rootProject.ext.dependencies["statusbarutil"]
-//    api rootProject.ext.dependencies["PermissionX"]
-}
-
-def siteUrl = 'https://github.com/zhang721688/MVVMDemo'
-def gitUrl = 'https://github.com/zhang721688/MVVMDemo.git'
-def libName = "jetpackmvvm"
-group = "com.zxn.mvvm"
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name 'desc content'
-                url siteUrl
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'zxn'
-                        name 'ZhangXiaoNing'
-                        email 'zxn13716071676@sina.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-
-task generateSourcesJar(type: Jar) {
-    group = 'jar'
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    //outputFormat = 'javadoc'
-    outputFormat = 'html'
-    outputDirectory = javadoc.destinationDir
-}
-
-task generateJavadoc(type: Jar, dependsOn: dokkaJavadoc) {
-    group = 'jar'
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives generateJavadoc
-    archives generateSourcesJar
-}
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "MVVMDemo"
-        name = libName
-        desc = 'desc content'
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
-}
-repositories {
-    mavenCentral()
 }
