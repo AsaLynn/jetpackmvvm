@@ -3,7 +3,7 @@ Android最新架构之MVVM.
 
 #### 使用
 ```
-implementation 'com.zxn.mvvm:jetpackmvvm:1.2.4'
+implementation 'com.github.zxnsto:mvvm:1.2.4'
 ```
 #### 说明
 基于refroit + livedata + 协程$rxjava.
