@@ -4,7 +4,7 @@ package com.wanandroid.model.repository
 import com.wanandroid.model.http.WanRetrofitClient
 import com.wanandroid.model.resultbean.Guide
 import com.wanandroid.model.http.BaseRepository
-import com.zxn.mvvm.model.http.ResponseResult
+import com.wanandroid.model.http.ResponseResult
 
 /**
  * Created by Donkey

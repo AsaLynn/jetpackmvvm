@@ -7,15 +7,19 @@ import com.zxn.mvvm.model.IResponseEntity
  */
 data class WanResponseV1<T>(val errorCode: Int, val errorMsg: String, val data: T) : IResponseEntity<T> {
 
-    override fun succeed(): Boolean = errorCode == 0
+    override fun succeed(): Boolean = errorCode == -1
 
 //    override var dataEntity: T = data
 
-    override val message: String = errorMsg
+//    override val message: String = errorMsg
 
-    override val code: Int = errorCode
+//    override val code: Int = errorCode
 
-    override fun getEntity(): T = data
+    override fun entity(): T = data
+
+    override fun code(): Int = errorCode
+
+    override fun message(): String = errorMsg
 
 }
 

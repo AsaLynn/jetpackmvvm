@@ -1,6 +1,5 @@
 package com.wanandroid.model.http
 
-import com.zxn.mvvm.model.http.ResponseResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 

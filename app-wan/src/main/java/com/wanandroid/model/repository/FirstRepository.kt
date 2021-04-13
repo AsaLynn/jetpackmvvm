@@ -5,7 +5,7 @@ import com.wanandroid.model.resultbean.Article
 import com.wanandroid.model.resultbean.ArticleList
 import com.wanandroid.model.resultbean.Banner
 import com.wanandroid.model.http.BaseRepository
-import com.zxn.mvvm.model.http.ResponseResult
+import com.wanandroid.model.http.ResponseResult
 
 /**
  * Created by Donkey

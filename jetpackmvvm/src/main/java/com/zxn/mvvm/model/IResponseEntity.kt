@@ -11,21 +11,21 @@ interface IResponseEntity<T> {
      */
     fun succeed(): Boolean
 
-//    /**
-//     * 实际要使用的数据,抽象到接口层面.
-//     * 实现该接口的时候,将实体类的抽象字段和该抽象字段指定为同一个即可.
-//     */
-//    var dataEntity: T
-
-    /**
-     * 响应结果信息描述
-     */
-    val message: String
 
     /**
      * 响应码
      */
-    val code: Int
+    fun code(): Int
 
-    fun getEntity(): T
+    /**
+     * 获取抽象实体结果.
+     * @return T
+     */
+    fun entity(): T?
+    //fun entity(): T?
+
+    /**
+     * 响应结果信息描述
+     */
+    fun message(): String
 }

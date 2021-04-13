@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.wanandroid.base.BaseViewModel
-import com.zxn.mvvm.model.http.ResponseResult
+import com.wanandroid.model.http.ResponseResult
 import com.wanandroid.model.repository.SearchHistoryRepository
 import com.wanandroid.model.resultbean.PopularSearch
 import kotlinx.coroutines.Dispatchers
