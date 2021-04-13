@@ -4,16 +4,12 @@ import com.zxn.mvvm.model.http.ResponseResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 
-abstract class BaseModel<T> : IBaseModel<T> {
-
-    override fun clear() {
-
-    }
+abstract class BaseModel<S> : IBaseModel<S> {
 
     /**
      * 线程安全模式执行网络请求调用
      */
-    suspend fun <T> safeApiCall(call: suspend () -> ResponseResult<T>, errorMessage: String): ResponseResult<T> {
+    suspend fun <T : Any> safeApiCall(call: suspend () -> ResponseResult<T>, errorMessage: String): ResponseResult<T> {
         return try {
             call()
         } catch (e: Exception) {
@@ -25,9 +21,9 @@ abstract class BaseModel<T> : IBaseModel<T> {
     /**
      * 解析响应结果.
      */
-    open suspend fun <T> executeResponse(response: IResponseEntity<T>,
-                                         successBlock: (suspend CoroutineScope.() -> Unit)? = null,
-                                         errorBlock: (suspend CoroutineScope.() -> Unit)? = null): ResponseResult<T> {
+    open suspend fun <T : Any> executeResponse(response: IResponseEntity<T>,
+                                               successBlock: (suspend CoroutineScope.() -> Unit)? = null,
+                                               errorBlock: (suspend CoroutineScope.() -> Unit)? = null): ResponseResult<T> {
         return coroutineScope {
             if (response.succeed()) {
                 successBlock?.let { it() }
@@ -40,7 +36,6 @@ abstract class BaseModel<T> : IBaseModel<T> {
                 errorBlock?.let { it() }
                 ResponseResult.Error(response.message())
             }
-            //onExecuteResponse(response)
         }
     }
 
