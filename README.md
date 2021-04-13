@@ -3,7 +3,7 @@ Android最新架构之MVVM.
 
 #### 使用
 ```
-implementation 'com.zxn.mvvm:jetpackmvvm:1.2.3'
+implementation 'com.zxn.mvvm:jetpackmvvm:1.2.4'
 ```
 #### 说明
 基于refroit + livedata + 协程$rxjava.
@@ -13,8 +13,10 @@ https://github.com/trello/RxLifecycle
 https://github.com/mtjsoft/LibKM/
 https://blog.csdn.net/qq_28779083/article/details/108346827
 
-#### todo
-1,Fragment的修改完善.
+#### 版本日志
+v1.2.4:
+- `ResponseResult`增加子类型`BaseSuccess`用于包装单层json的数据结构.
+
 
 #### 标签
 
@@ -22,20 +24,6 @@ jetpackmvvm:1.2.3
 ```
 git tag -a v1.2.3 -m 'view层不在使用泛型'
 git push origin v1.2.3
-git tag
-```
-
-jetpackmvvm:1.0.1
-```
-git tag -a v1.0.1 -m '增加 arouter'
-git push origin v1.0.1
-git tag
-```
-
-jetpackmvvm:1.0.0
-```
-git tag -a v1.0.0 -m 'jetpackmvvm1.0.0:fix'
-git push origin v1.0.0
 git tag
 ```
 
