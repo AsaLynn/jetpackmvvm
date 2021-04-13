@@ -53,7 +53,7 @@
         android:layout_marginHorizontal="60dp"
         android:hint="@string/enterPassword"
         android:singleLine="true"
-        android:text="zxn000000"
+        android:text="zxn000001"
         android:theme="@style/EditTextTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

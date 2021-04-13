@@ -6,12 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.wanandroid.base.BaseViewModel
-import com.zxn.mvvm.model.http.ResponseResult
+import com.wanandroid.model.http.ResponseResult
 import com.wanandroid.model.repository.LoginRepository
-import com.wanandroid.model.resultbean.Article
-import com.wanandroid.model.resultbean.ArticleList
 import com.wanandroid.model.resultbean.User
-import com.wanandroid.ui.first.ArticleViewModel
 import com.wanandroid.util.SharedPreferencesData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

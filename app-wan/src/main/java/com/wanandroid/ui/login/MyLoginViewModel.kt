@@ -30,23 +30,36 @@ class MyLoginViewModel : BaseViewModel<WanAndroidModel>() {
             val result = withContext(Dispatchers.IO) {
                 mModel?.login(name, password)
             }
-            if (result is ResponseResult.Success) {
-                Log.d("MyLoginViewModel", result.data.toString())
-                val user: User = result.data
-                user?.let {
-                    SharedPreferencesData.name = user.username
-                    SharedPreferencesData.password = user.password
+
+            when (result) {
+                is ResponseResult.Success -> {
+                    Log.d("MyLoginViewModel", result.data.toString())
+                    val user: User = result.data
+                    user?.let {
+                        SharedPreferencesData.name = user.username
+                        SharedPreferencesData.password = user.password
+                    }
+                    SharedPreferencesData.isLogin = true
+                    emitLoading(isLoading = false, successData = user).run {
+                        mLoadingDataEvent.postValue(this)
+                    }
                 }
-                SharedPreferencesData.isLogin = true
-                emitLoading(isLoading = false, successData = user).run {
-                    mLoadingDataEvent.postValue(this)
+
+                is ResponseResult.BaseSuccess -> {
+                    SharedPreferencesData.isLogin = false
+                    emitLoading<User>(isLoading = false, showError = result.data.message()).run {
+                        mLoadingDataEvent.postValue(this)
+                    }
                 }
-            } else if (result is ResponseResult.Error) {
-                SharedPreferencesData.isLogin = false
-                emitLoading<User>(isLoading = false, showError = result.errorMsg).run {
-                    mLoadingDataEvent.postValue(this)
+
+                is ResponseResult.Error -> {
+                    SharedPreferencesData.isLogin = false
+                    emitLoading<User>(isLoading = false, showError = result.errorMsg).run {
+                        mLoadingDataEvent.postValue(this)
+                    }
                 }
             }
+
         }
     }
 }

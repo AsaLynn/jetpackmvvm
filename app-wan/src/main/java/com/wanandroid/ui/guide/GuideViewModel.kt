@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.wanandroid.base.BaseViewModel
+import com.wanandroid.model.http.ResponseResult
 import com.wanandroid.model.repository.GuideRepository
 import com.wanandroid.model.resultbean.Guide
-import com.zxn.mvvm.model.http.ResponseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -4,7 +4,7 @@ import android.util.Log
 import com.wanandroid.model.http.WanRetrofitClient
 import com.wanandroid.model.resultbean.User
 import com.wanandroid.model.http.BaseRepository
-import com.zxn.mvvm.model.http.ResponseResult
+import com.wanandroid.model.http.ResponseResult
 
 /**
  * Created by Donkey

@@ -2,6 +2,7 @@ package com.wanandroid
 import com.wanandroid.ui.blog.BlogViewModel
 import com.wanandroid.ui.first.ArticleViewModel
 import com.wanandroid.ui.guide.GuideViewModel
+import com.wanandroid.ui.login.MyLoginViewModel
 import com.wanandroid.ui.login.RegisterLoginViewModel
 import com.wanandroid.ui.readhistory.ReadHistoryViewModel
 import com.wanandroid.ui.searchhistory.SearchHistoryViewModel
@@ -18,6 +19,7 @@ val viewModelModule = module {
     viewModel { SearchHistoryViewModel() }
     viewModel { RegisterLoginViewModel() }
     viewModel { ReadHistoryViewModel() }
+    viewModel { MyLoginViewModel() }
 }
 
 val repositoryModule = module {

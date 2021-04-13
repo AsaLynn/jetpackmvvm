@@ -13,7 +13,7 @@ abstract class BaseModel<T> : IBaseModel<T> {
     /**
      * 线程安全模式执行网络请求调用
      */
-    suspend fun <T : Any> safeApiCall(call: suspend () -> ResponseResult<T>, errorMessage: String): ResponseResult<T> {
+    suspend fun <T> safeApiCall(call: suspend () -> ResponseResult<T>, errorMessage: String): ResponseResult<T> {
         return try {
             call()
         } catch (e: Exception) {
@@ -25,18 +25,30 @@ abstract class BaseModel<T> : IBaseModel<T> {
     /**
      * 解析响应结果.
      */
-    open suspend fun <T : Any> executeResponse(response: IResponseEntity<T>,
-                                               successBlock: (suspend CoroutineScope.() -> Unit)? = null,
-                                               errorBlock: (suspend CoroutineScope.() -> Unit)? = null): ResponseResult<T> {
+    open suspend fun <T> executeResponse(response: IResponseEntity<T>,
+                                         successBlock: (suspend CoroutineScope.() -> Unit)? = null,
+                                         errorBlock: (suspend CoroutineScope.() -> Unit)? = null): ResponseResult<T> {
         return coroutineScope {
             if (response.succeed()) {
                 successBlock?.let { it() }
-                ResponseResult.Success(response.getEntity())
+                if (response.entity() != null) {
+                    ResponseResult.Success(response.entity()!!)
+                } else {
+                    ResponseResult.BaseSuccess(response)
+                }
             } else {
                 errorBlock?.let { it() }
-                ResponseResult.Error(response.message)
+                ResponseResult.Error(response.message())
             }
+            //onExecuteResponse(response)
         }
     }
+
+//    /**
+//     * 最终结果抽象到子类
+//     */
+//    abstract suspend fun <T : Any> onExecuteResponse(response: IResponseEntity<T>,
+//                                                     successBlock: (suspend CoroutineScope.() -> Unit)? = null,
+//                                                     errorBlock: (suspend CoroutineScope.() -> Unit)? = null): ResponseResult<T>
 
 }
