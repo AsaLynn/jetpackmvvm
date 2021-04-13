@@ -20,10 +20,10 @@ v1.2.4:
 
 #### 标签
 
-jetpackmvvm:1.2.3
+jetpackmvvm:1.2.4
 ```
-git tag -a v1.2.3 -m 'view层不在使用泛型'
-git push origin v1.2.3
+git tag -a v1.2.4 -m '增加子类型`BaseSuccess`用于包装单层json的数据结构'
+git push origin v1.2.4
 git tag
 ```
 
