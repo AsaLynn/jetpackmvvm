@@ -5,6 +5,7 @@ Android最新架构之MVVM.
 ```
 implementation 'com.github.zxnsto:mvvm:1.2.4'
 ```
+
 #### 说明
 基于refroit + livedata + 协程$rxjava.
 
