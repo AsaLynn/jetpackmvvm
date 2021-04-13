@@ -28,3 +28,4 @@ git push origin v1.2.4
 git tag
 ```
 
+[![](https://jitpack.io/v/zxnsto/jetpackmvvm.svg)](https://jitpack.io/#zxnsto/jetpackmvvm)
