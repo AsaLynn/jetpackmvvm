@@ -16,7 +16,7 @@ import java.lang.ref.WeakReference
 /**
  *  Created by zxn on 2020/11/5.
  */
-abstract class BaseViewModel<M : IBaseModel<*>?> : ViewModel(), LifecycleObserver, ILoadingView, IToastView {
+abstract class BaseViewModel<M : IBaseModel<*>> : ViewModel(), LifecycleObserver, ILoadingView, IToastView {
 
     /**
      * 发出,发射数据.
@@ -53,11 +53,6 @@ abstract class BaseViewModel<M : IBaseModel<*>?> : ViewModel(), LifecycleObserve
 
     init {
         mModel = getNewInstance(this, 0)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        mModel?.clear()
     }
 
     override var cancelable: Boolean = false

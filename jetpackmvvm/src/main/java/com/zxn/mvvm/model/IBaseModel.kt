@@ -6,10 +6,8 @@ package com.zxn.mvvm.model
  *  IBaseModel
  *  Created by zxn on 2020/11/5.
  */
-interface IBaseModel<T> {
+interface IBaseModel<S> {
 
-    var mApiService: T
-
-    fun clear()
+    var mApiService: S
 
 }

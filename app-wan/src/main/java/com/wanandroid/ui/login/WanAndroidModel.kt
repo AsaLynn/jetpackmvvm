@@ -20,10 +20,6 @@ class WanAndroidModel : BaseModel<WanService>() {
 
     override var mApiService: WanService = WanRetrofitClient.service
 
-    override fun clear() {
-
-    }
-
     suspend fun login(userName: String, passWord: String): ResponseResult<out User> {
         return safeApiCall(call = { requestLogin(userName, passWord) }, errorMessage = "")
     }
