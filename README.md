@@ -3,7 +3,7 @@ Android最新架构之MVVM.
 
 #### 使用
 ```
-implementation 'com.github.zxnsto:mvvm:1.2.4'
+implementation 'com.github.Lyngzh:mvvm:1.2.5'
 ```
 
 #### 说明

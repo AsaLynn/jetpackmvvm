@@ -10,7 +10,6 @@ import com.zxn.mvvm.R
 import com.zxn.mvvm.network.NetState
 import com.zxn.mvvm.network.NetworkStateManager
 import com.zxn.mvvm.viewmodel.BaseViewModel
-import com.zxn.utils.UIUtils
 
 /**
  *  VM : BaseViewModel<out IBaseModel<*>>
@@ -111,11 +110,11 @@ abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCo
     }
 
     override fun showToast(msg: Int) {
-        UIUtils.toast(UIUtils.getString(msg))
+
     }
 
     override fun showToast(msg: String) {
-        UIUtils.toast(msg)
+
     }
 
     /**

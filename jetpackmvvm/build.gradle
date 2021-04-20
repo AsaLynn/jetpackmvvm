@@ -6,9 +6,9 @@ plugins {
     id 'com.github.dcendents.android-maven'
 }
 
-version = "1.2.4"
+version = "1.2.5"
 
-group = "zxnsto"
+group = "Lyngzh"
 
 android {
     compileSdkVersion 30
@@ -71,7 +71,7 @@ dependencies {
 
     api 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
 
-    api 'com.zxn.utils:common-utils:+'
+//    api 'com.zxn.utils:common-utils:+'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
