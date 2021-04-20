@@ -15,16 +15,16 @@ https://github.com/mtjsoft/LibKM/
 https://blog.csdn.net/qq_28779083/article/details/108346827
 
 #### 版本日志
-v1.2.4:
+v1.2.5:
 - `ResponseResult`增加子类型`BaseSuccess`用于包装单层json的数据结构.
 
 
 #### 标签
 
-jetpackmvvm:1.2.4
+jetpackmvvm:1.2.5
 ```
-git tag -a v1.2.4 -m '增加子类型`BaseSuccess`用于包装单层json的数据结构'
-git push origin v1.2.4
+git tag -a 1.2.5 -m '完善'
+git push origin v1.2.5
 git tag
 ```
 
