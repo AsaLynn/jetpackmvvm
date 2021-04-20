@@ -24,7 +24,7 @@ v1.2.5:
 jetpackmvvm:1.2.5
 ```
 git tag -a 1.2.5 -m '完善'
-git push origin v1.2.5
+git push origin 1.2.5
 git tag
 ```
 
