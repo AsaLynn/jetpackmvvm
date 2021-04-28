@@ -7,26 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.trello.rxlifecycle2.components.support.RxFragment
-import com.zxn.mvvm.ext.getVmClazz
-import com.zxn.mvvm.model.IBaseModel
 import com.zxn.mvvm.network.NetState
 import com.zxn.mvvm.network.NetworkStateManager
 import com.zxn.mvvm.viewmodel.BaseViewModel
-import java.lang.reflect.ParameterizedType
 
 /**
  * Updated by zxn on 2020/10/23.
  */
-abstract class BaseFragment/*<VM : BaseViewModel<out IBaseModel<*>>> */: RxFragment(), IBaseView, ILoadingView {
+abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
 
     //是否第一次加载
-    private var isFirst: Boolean = true
-
+    var isFirst: Boolean = true
+        private set
     private var mPageTitle = ""
-//    lateinit var mViewModel: VM
+
     override var titleBar: View? = null
     override var usedImmersionBar: Boolean = false
     override var usedStatusBarDarkFont: Boolean = false
@@ -37,13 +33,6 @@ abstract class BaseFragment/*<VM : BaseViewModel<out IBaseModel<*>>> */: RxFragm
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context as AppCompatActivity
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        /*if (this.javaClass.genericSuperclass is ParameterizedType) {
-            mViewModel = createViewModel()
-        }*/
     }
 
     /**
@@ -61,11 +50,11 @@ abstract class BaseFragment/*<VM : BaseViewModel<out IBaseModel<*>>> */: RxFragm
         isFirst = true
 
         //if (::mViewModel.isInitialized) {
-            createObserver()
-            //lifecycle.addObserver(mViewModel)
-            //mViewModel.injectLifecycleProvider(this)
-            //registorUIChangeLiveDataCallBack()
-            //registorDefUIChange()
+        createObserver()
+        //lifecycle.addObserver(mViewModel)
+        //mViewModel.injectLifecycleProvider(this)
+        //registorUIChangeLiveDataCallBack()
+        //registorDefUIChange()
         //}
 
         onInitView()
@@ -83,13 +72,6 @@ abstract class BaseFragment/*<VM : BaseViewModel<out IBaseModel<*>>> */: RxFragm
         registerEventBus(false)
         super.onDestroy()
     }
-
-//    /**
-//     * 创建viewModel
-//     */
-//    private fun createViewModel(): VM {
-//        return ViewModelProvider(this).get(getVmClazz(this)!!)
-//    }
 
     val pageTitle: CharSequence = mPageTitle
 
@@ -197,7 +179,7 @@ abstract class BaseFragment/*<VM : BaseViewModel<out IBaseModel<*>>> */: RxFragm
 //        mViewModel.getUC().getFinishEvent().observe(this, {
 //            finish()
 //        })
-        //关闭上一层
+    //关闭上一层
 //        mViewModel.getUC().getOnBackPressedEvent().observe(this, {
 //            onBackPressed()
 //        })
@@ -262,7 +244,6 @@ abstract class BaseFragment/*<VM : BaseViewModel<out IBaseModel<*>>> */: RxFragm
             }
             //关闭弹窗
             viewModel.loadingChange.dismissDialog.observeInFragment(this) {
-                //dismissLoading()
                 closeLoading()
             }
         }
