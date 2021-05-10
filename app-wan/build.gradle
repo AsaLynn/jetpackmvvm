@@ -68,7 +68,7 @@ dependencies {
     // network
     implementation Deps.retrofit
     implementation Deps.retrofit_converter_gson
-    implementation Deps.okhttp_logging_interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
     // viewpager
     implementation Deps.material
     implementation Deps.viewpager
