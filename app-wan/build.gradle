@@ -56,6 +56,7 @@ dependencies {
     implementation Deps.constraintLayout
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.2.1'
     testImplementation Deps.junit
     androidTestImplementation Deps.test_junit
     androidTestImplementation Deps.test_espresso
@@ -68,7 +69,7 @@ dependencies {
     // network
     implementation Deps.retrofit
     implementation Deps.retrofit_converter_gson
-    implementation Deps.okhttp_logging_interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
     // viewpager
     implementation Deps.material
     implementation Deps.viewpager
@@ -95,4 +96,5 @@ dependencies {
     implementation Deps.room_ktx
     kapt Deps.room_compiler
     implementation Deps.autoSize
+    implementation 'com.github.AsaLynn:ExpandTabLayout:1.1.3'
 }

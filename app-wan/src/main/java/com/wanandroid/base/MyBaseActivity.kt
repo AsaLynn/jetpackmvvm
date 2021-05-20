@@ -6,7 +6,7 @@ import com.zxn.mvvm.view.BaseActivity
  * 基类.
  *  Created by ny on 2021/2/20.
  */
-abstract class MyBaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : BaseActivity/*<VM>*/() {
+abstract class MyBaseActivity: BaseActivity() {
 
     override fun registerEventBus(isRegister: Boolean) {
 

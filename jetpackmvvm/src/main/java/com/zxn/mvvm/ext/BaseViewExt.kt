@@ -5,10 +5,20 @@ import android.content.Intent
 
 /**
  *  跳转Activity方法.
- *  Created by zxn on 2020/12/26.
+ *  @param context
+ *  @param block 函数lamada.
  */
-inline fun <reified T> jumpInTo(tContext: Context, block: Intent.() -> Unit) {
-    val intent = Intent(tContext, T::class.java)
+inline fun <reified T> jumpInTo(context: Context, block: Intent.() -> Unit) {
+    val intent = Intent(context, T::class.java)
     intent.block()
-    tContext.startActivity(intent)
+    context.startActivity(intent)
+}
+
+/**
+ *  跳转Activity方法.
+ *  @param context
+ */
+inline fun <reified T> jumpInTo(context: Context) {
+    val intent = Intent(context, T::class.java)
+    context.startActivity(intent)
 }

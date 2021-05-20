@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.readhistory.MyReadHistoryActivity"></activity>
+        <activity android:name=".ui.tab.Main0Activity"></activity>
+        <activity android:name=".ui.readhistory.MyReadHistoryActivity" />
         <activity android:name=".ui.login.MyLoginActivity" />
         <activity android:name=".ui.readhistory.ReadHistoryActivity" />
         <activity android:name=".ui.login.RegisterLoginActivity" />
@@ -34,6 +35,7 @@
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".BrowserActivity" />
+        <activity android:name=".ui.tab.ShellsActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".CustomCrashActivity" />
 

@@ -3,7 +3,7 @@ Android最新架构之MVVM.
 
 #### 使用
 ```
-implementation 'com.github.AsaLynn:mvvm:1.2.6'
+implementation 'com.github.AsaLynn:mvvm:1.2.7'
 ```
 
 #### 说明
@@ -21,10 +21,10 @@ v1.2.5:
 
 #### 标签
 
-jetpackmvvm:1.2.6
+jetpackmvvm:1.2.7
 ```
-git tag -a 1.2.6 -m '完善'
-git push origin 1.2.6
+git tag -a 1.2.7 -m '完善'
+git push origin 1.2.7
 git tag
 ```
 
