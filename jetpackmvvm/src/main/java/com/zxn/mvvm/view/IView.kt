@@ -1,5 +1,6 @@
 package com.zxn.mvvm.view
 
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -7,8 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
  */
 interface IView {
 
+
     /**
-     * 布局的资源id.
+     * 根布局不为null的时候生效启动,
+     */
+    val layoutRoot: View?
+
+    /**
+     * 布局的资源id,layoutRoot为null的时候启用.
      */
     val layoutResId: Int
 

@@ -1,5 +1,6 @@
 package com.wanandroid.base
 
+import android.view.View
 import com.zxn.mvvm.view.BaseFragment
 
 /**
@@ -7,6 +8,10 @@ import com.zxn.mvvm.view.BaseFragment
  *  Created by ny on 2021/2/20.
  */
 abstract class MyBaseFragment : BaseFragment() {
+
+    override val layoutResId: Int = 0
+
+    override val layoutRoot: View?= null
 
     override fun lazyLoadData() {
 

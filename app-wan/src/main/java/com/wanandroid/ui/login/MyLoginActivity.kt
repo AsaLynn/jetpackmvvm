@@ -3,21 +3,20 @@ package com.wanandroid.ui.login
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.wanandroid.App
-import com.wanandroid.R
 import com.wanandroid.base.MyBaseActivity
-import com.zxn.mvvm.view.BaseActivity
+import com.wanandroid.databinding.ActivityMyLoginBinding
 import kotlinx.android.synthetic.main.activity_my_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  *  Created by ny on 2021/2/4.
  */
-class MyLoginActivity : MyBaseActivity/*<MyLoginViewModel>*/() {
-
-    private val mViewModel by viewModel<MyLoginViewModel>()
+class MyLoginActivity : MyBaseActivity() {
 
     companion object {
         @JvmStatic
@@ -28,10 +27,16 @@ class MyLoginActivity : MyBaseActivity/*<MyLoginViewModel>*/() {
         private const val TAG = "MyLoginActivity"
     }
 
-    override val layoutResId: Int = R.layout.activity_my_login
+    private val mViewModel by viewModel<MyLoginViewModel>()
+
+    private val mViewBinding by lazy {
+        ActivityMyLoginBinding.inflate(layoutInflater)
+    }
+
+    override val layoutRoot: View by lazy { mViewBinding.root }
 
     override fun onInitView() {
-        login_bt.setOnClickListener {
+        mViewBinding.loginBt.setOnClickListener {
             val name = user_edt.text.toString()
             val password = pwd_edt.text.toString()
             mViewModel.login(name, password)

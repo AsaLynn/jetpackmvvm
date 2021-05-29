@@ -46,20 +46,19 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = if (layoutResId <= 0) super.onCreateView(inflater, container, savedInstanceState)
-    else inflater.inflate(layoutResId, container, false)
+    ): View? = if (layoutRoot != null) layoutRoot else (if (layoutResId <= 0) super.onCreateView(
+        inflater,
+        container,
+        savedInstanceState
+    )
+    else inflater.inflate(layoutResId, container, false))
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isFirst = true
 
-        //if (::mViewModel.isInitialized) {
         createObserver()
-        //lifecycle.addObserver(mViewModel)
-        //mViewModel.injectLifecycleProvider(this)
-        //registorUIChangeLiveDataCallBack()
-        //registorDefUIChange()
-        //}
 
         onInitView()
 

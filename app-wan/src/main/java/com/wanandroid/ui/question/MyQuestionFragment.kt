@@ -1,5 +1,6 @@
 package com.wanandroid.ui.question
 
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -7,18 +8,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.wanandroid.App
 import com.wanandroid.R
 import com.wanandroid.adapter.MyQuestionAdapter
+import com.wanandroid.base.MyBaseFragment
 import com.wanandroid.binding.isRefresh
+import com.wanandroid.databinding.ActivityMyLoginBinding
+import com.wanandroid.databinding.FragmentMyQuestionBinding
 import com.wanandroid.ui.readhistory.MyReadHistoryViewModel
 import com.zxn.mvvm.view.BaseFragment
 import kotlinx.android.synthetic.main.question_project.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-/**
- * MyQuestionViewModel
- * MyQuestionFragment
- * A simple [Fragment] subclass.
- */
-class MyQuestionFragment : BaseFragment/*<MyQuestionViewModel>*/() {
+class MyQuestionFragment : MyBaseFragment() {
+
+    private val mViewBinding by lazy {
+        FragmentMyQuestionBinding.inflate(layoutInflater)
+    }
+
+    override val layoutRoot: View by lazy { mViewBinding.root }
 
     private val questionArticleAdapter by lazy { MyQuestionAdapter() }
 
@@ -32,19 +37,20 @@ class MyQuestionFragment : BaseFragment/*<MyQuestionViewModel>*/() {
 
     }
 
-    override val layoutResId: Int = R.layout.fragment_my_question
+//    override val layoutResId: Int = R.layout.fragment_my_question
 
     override fun onInitView() {
-        questionRecycleView.run {
+
+        mViewBinding.questionRecycleView.run {
             layoutManager = LinearLayoutManager(mContext)
             setHasFixedSize(true)
             adapter = questionArticleAdapter
         }
-        questionRefreshLayout.setOnRefreshListener {
+        mViewBinding.questionRefreshLayout.setOnRefreshListener {
             questionArticleAdapter.setEnableLoadMore(false)
             refresh()
         }
-        search_btn.setOnClickListener {
+        mViewBinding.searchBtn.setOnClickListener {
             NavHostFragment.findNavController(this@MyQuestionFragment)
                     .navigate(R.id.searchActivity)
         }
@@ -81,40 +87,6 @@ class MyQuestionFragment : BaseFragment/*<MyQuestionViewModel>*/() {
     }
 
     private fun refresh() {
-        //articleViewModel.getQuestionList(true)
         mViewModel.getQuestionList(true)
     }
 }
-
-
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
-//private var param1: String? = null
-//private var param2: String? = null
-
-//override fun onCreate(savedInstanceState: Bundle?) {
-//    super.onCreate(savedInstanceState)
-//    arguments?.let {
-//        param1 = it.getString(ARG_PARAM1)
-//        param2 = it.getString(ARG_PARAM2)
-//    }
-//}
-//companion object {
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment MyQuestionFragment.
-//     */
-//    @JvmStatic
-//    fun newInstance(param1: String, param2: String) =
-//            MyQuestionFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//}
