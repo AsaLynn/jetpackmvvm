@@ -42,7 +42,11 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = if (layoutResId <= 0) super.onCreateView(inflater, container, savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = if (layoutResId <= 0) super.onCreateView(inflater, container, savedInstanceState)
     else inflater.inflate(layoutResId, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,6 +75,14 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
     override fun onDestroy() {
         registerEventBus(false)
         super.onDestroy()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        view?.post {
+            if (!hidden) {
+                lazyLoadData()
+            }
+        }
     }
 
     val pageTitle: CharSequence = mPageTitle
@@ -121,8 +133,8 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
                 setStatusBarDarkFont()
             } else {
                 ImmersionBar.with(this)
-                        .titleBar(titleBar)
-                        .init()
+                    .titleBar(titleBar)
+                    .init()
             }
         }
     }
@@ -132,11 +144,62 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
      */
     open fun setStatusBarDarkFont() {
         ImmersionBar.with(this)
-                .statusBarDarkFont(true)
-                .navigationBarDarkIcon(true)
-                .titleBar(titleBar)
-                .init()
+            .statusBarDarkFont(true)
+            .navigationBarDarkIcon(true)
+            .titleBar(titleBar)
+            .init()
     }
+
+
+    /**
+     * Fragment执行onCreate后触发的方法
+     */
+    open fun initData() {}
+
+    /**
+     * 当可见的时候加载数据.
+     */
+    abstract fun lazyLoadData()
+
+    /**
+     * 是否需要懒加载
+     */
+    private fun onVisible() {
+        if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
+            //等待view加载后触发懒加载
+            view?.post {
+                //在Fragment中，只有懒加载过了才能开启网络变化监听
+                NetworkStateManager.instance.mNetworkStateCallback.observeInFragment(this) {
+                    //不是首次订阅时调用方法，防止数据第一次监听错误
+                    if (!isFirst) {
+                        onNetworkStateChanged(it)
+                    }
+                }
+                isFirst = false
+            }
+        }
+    }
+
+    /**
+     * 将非该Fragment绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
+     * @param viewModels Array<out BaseViewModel>
+     */
+    protected fun addLoadingObserve(vararg viewModels: BaseViewModel<*>) {
+        viewModels.forEach { viewModel ->
+            //显示弹窗
+            viewModel.loadingChange.showDialog.observeInFragment(this) {
+                showLoading()
+            }
+            //关闭弹窗
+            viewModel.loadingChange.dismissDialog.observeInFragment(this) {
+                closeLoading()
+            }
+        }
+    }
+
+
+}
+
 
 //    /**
 //     * 注册ViewModel与View的契约UI回调事件
@@ -179,7 +242,7 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
 //        mViewModel.getUC().getFinishEvent().observe(this, {
 //            finish()
 //        })
-    //关闭上一层
+//关闭上一层
 //        mViewModel.getUC().getOnBackPressedEvent().observe(this, {
 //            onBackPressed()
 //        })
@@ -196,56 +259,3 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
 //            closeLoading()
 //        }
 //    }
-
-    /**
-     * Fragment执行onCreate后触发的方法
-     */
-    open fun initData() {}
-
-    /**
-     * 懒加载
-     */
-    abstract fun lazyLoadData()
-
-    override fun onResume() {
-        super.onResume()
-        onVisible()
-    }
-
-    /**
-     * 是否需要懒加载
-     */
-    private fun onVisible() {
-        if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
-            //等待view加载后触发懒加载
-            view?.post {
-                lazyLoadData()
-                //在Fragment中，只有懒加载过了才能开启网络变化监听
-                NetworkStateManager.instance.mNetworkStateCallback.observeInFragment(this) {
-                    //不是首次订阅时调用方法，防止数据第一次监听错误
-                    if (!isFirst) {
-                        onNetworkStateChanged(it)
-                    }
-                }
-                isFirst = false
-            }
-        }
-    }
-
-    /**
-     * 将非该Fragment绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
-     * @param viewModels Array<out BaseViewModel>
-     */
-    protected fun addLoadingObserve(vararg viewModels: BaseViewModel<*>) {
-        viewModels.forEach { viewModel ->
-            //显示弹窗
-            viewModel.loadingChange.showDialog.observeInFragment(this) {
-                showLoading()
-            }
-            //关闭弹窗
-            viewModel.loadingChange.dismissDialog.observeInFragment(this) {
-                closeLoading()
-            }
-        }
-    }
-}
