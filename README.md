@@ -3,11 +3,11 @@ Android最新架构之MVVM.
 
 #### 使用
 ```
-implementation 'com.github.AsaLynn:mvvm:1.2.7'
+implementation 'com.github.AsaLynn:mvvm:1.2.8'
 ```
 
 #### 说明
-基于refroit + livedata + 协程$rxjava.
+基于refroit + livedata + 协程.
 
 #### 参考资料
 https://github.com/trello/RxLifecycle
@@ -21,10 +21,10 @@ v1.2.5:
 
 #### 标签
 
-jetpackmvvm:1.2.7
+jetpackmvvm:1.2.8
 ```
-git tag -a 1.2.7 -m '完善'
-git push origin 1.2.7
+git tag -a 1.2.8 -m '完善'
+git push origin 1.2.8
 git tag
 ```
 
