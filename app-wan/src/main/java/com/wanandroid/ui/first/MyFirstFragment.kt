@@ -16,7 +16,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MyFirstFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MyFirstFragment : MyBaseFragment/*<Nothing>*/() {
+class MyFirstFragment : MyBaseFragment() {
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -29,15 +30,11 @@ class MyFirstFragment : MyBaseFragment/*<Nothing>*/() {
         }
     }
 
+
+
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyFirstFragment.
-         */
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
                 MyFirstFragment().apply {

@@ -12,18 +12,15 @@ import com.zxn.mvvm.network.NetworkStateManager
 import com.zxn.mvvm.viewmodel.BaseViewModel
 
 /**
- *  VM : BaseViewModel<out IBaseModel<*>>
- *  Updated by zxn on 2020/10/23.
+ *  Updated by zxn on 2021.05.29.
  */
-abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCompatActivity(), IBaseView,
-        ILoadingView {
+abstract class BaseActivity : RxAppCompatActivity(), IBaseView,
+    ILoadingView {
 
     /**
      * 是否需要使用DataBinding 供子类BaseVmDbActivity修改，用户请慎动
      */
     private var isUserDb = false
-
-//    lateinit var mViewModel: VM
     override var cancelable: Boolean = true
     override lateinit var mContext: AppCompatActivity
     override var usedEventBus: Boolean = false
@@ -31,36 +28,28 @@ abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCo
     override var titleBar: View? = null
     override var usedStatusBarDarkFont: Boolean = false
 
+    override val layoutRoot: View? by lazy {
+        onCreateRootView()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mContext = this
 
-        if (layoutResId != 0) {
-            setContentView(layoutResId)
+        if (layoutRoot != null) {
+            setContentView(layoutRoot)
+        } else {
+            if (layoutResId != 0) {
+                setContentView(layoutResId)
+            }
         }
 
         if (usedEventBus) {
             registerEventBus(true)
         }
 
-//        if (this.javaClass.genericSuperclass is ParameterizedType) {
-//            mViewModel = createViewModel()!!
-//        }
-
-
-
-//        if (isViewModelInitialized()) {
-            //加载进度弹框.
-//            registerUiChange()
-            createObserver()
-//            //让ViewModel拥有View的生命周期感应
-//            lifecycle.addObserver(mViewModel)
-            //注入RxLifecycle生命周期
-//            mViewModel.injectLifecycleProvider(this)
-            //私有的ViewModel与View的契约事件回调逻辑
-//            registorUIChangeLiveDataCallBack()
-//        }
+        createObserver()
 
         onInitView()
 
@@ -74,18 +63,7 @@ abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCo
     override fun onDestroy() {
         registerEventBus(false)
         super.onDestroy()
-        //解除ViewModel生命周期感应
-//        if (isViewModelInitialized()) {
-//            //lifecycle.removeObserver(mViewModel)
-//        }
     }
-
-//    /**
-//     * 创建viewModel
-//     */
-//    private fun createViewModel(): VM {
-//        return ViewModelProvider(this).get(getVmClazz(this)!!)
-//    }
 
     /**
      * 启动页面
@@ -109,13 +87,9 @@ abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCo
         startAnimation(false)
     }
 
-    override fun showToast(msg: Int) {
+    override fun showToast(msg: Int) {}
 
-    }
-
-    override fun showToast(msg: String) {
-
-    }
+    override fun showToast(msg: String) {}
 
     /**
      * 初始化沉浸式
@@ -127,8 +101,8 @@ abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCo
                 setStatusBarDarkFont()
             } else {
                 ImmersionBar.with(this)
-                        .titleBar(titleBar)
-                        .init()
+                    .titleBar(titleBar)
+                    .init()
             }
         }
     }
@@ -139,10 +113,10 @@ abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCo
      */
     open fun setStatusBarDarkFont() {
         ImmersionBar.with(this)
-                .statusBarDarkFont(true)
-                .navigationBarDarkIcon(true)
-                .titleBar(titleBar)
-                .init()
+            .statusBarDarkFont(true)
+            .navigationBarDarkIcon(true)
+            .titleBar(titleBar)
+            .init()
     }
 
     /**
@@ -167,75 +141,13 @@ abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCo
      *
      * @return true:启用,false,不启用.
      */
-    open fun usedAnimation(): Boolean {
-        return true
-    }
+    open fun usedAnimation(): Boolean = true
 
-    override fun showLoading(msg: String?) {
+    override fun showLoading(msg: String?) {}
 
-    }
+    override fun showLoading(msgResId: Int) {}
 
-    override fun showLoading(msgResId: Int) {
-
-    }
-
-    override fun closeLoading() {
-
-    }
-
-//    open fun isViewModelInitialized(): Boolean = ::mViewModel.isInitialized
-
-    companion object {
-        private val TAG = BaseActivity::class.java.simpleName
-    }
-
-//    /**
-//     * 注册ViewModel与View的契约UI回调事件
-//     */
-//    private fun registorUIChangeLiveDataCallBack() {
-//        //加载对话框显示
-//        mViewModel.getUC().getShowLoadingEvent().observe(this, {
-//            //showLoadingUI(it[BaseViewModel.ParameterField.MSG].toString(), it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean)
-//            cancelable = it[BaseViewModel.ParameterField.IS_CANCLE] as Boolean
-//            if (it[BaseViewModel.ParameterField.MSG] is String) {
-//                showLoading(it[BaseViewModel.ParameterField.MSG] as String)
-//            }
-//            if (it[BaseViewModel.ParameterField.MSG] is Int) {
-//                showLoading(it[BaseViewModel.ParameterField.MSG] as Int)
-//            }
-//        })
-//        //加载对话框消失
-//        mViewModel.getUC().getHideLoadingEvent().observe(this, {
-//            closeLoading()
-//        })
-//        //Toast显示
-//        mViewModel.getUC().getShowToastEvent().observe(this, {
-//            if (it is String) {
-//                showToast(it)
-//            }
-//            if (it is Int) {
-//                showToast(it)
-//            }
-//        })
-//        //跳入新页面
-//        mViewModel.getUC().getStartActivityEvent()
-//                .observe(this, {
-//                    fun onChanged(@Nullable params: Map<String, Any>) {
-//                        val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>
-//                        val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle
-//                        startActivity(clz, bundle)
-//                    }
-//                })
-//        //关闭界面
-//        mViewModel.getUC().getFinishEvent().observe(this, {
-//            setResult(Activity.RESULT_OK)
-//            finish()
-//        })
-//        //关闭上一层
-//        mViewModel.getUC().getOnBackPressedEvent().observe(this, {
-//            onBackPressed()
-//        })
-//    }
+    override fun closeLoading() {}
 
     /**
      * 跳转页面
@@ -250,21 +162,6 @@ abstract class BaseActivity/*<VM : BaseViewModel<out IBaseModel<*>>>*/ : RxAppCo
         }
         startActivity(intent)
     }
-
-//    /**
-//     * 注册UI 事件
-//     */
-//    private fun registerUiChange() {
-//        //显示弹窗
-//        mViewModel.loadingChange.showDialog.observeInActivity(this) {
-//            showLoading(it)
-//        }
-//        //关闭弹窗
-//        mViewModel.loadingChange.dismissDialog.observeInActivity(this) {
-//            //dismissLoading()
-//            closeLoading()
-//        }
-//    }
 
     /**
      * 网络变化监听 子类重写
