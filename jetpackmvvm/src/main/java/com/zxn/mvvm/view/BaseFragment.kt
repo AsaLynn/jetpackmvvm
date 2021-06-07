@@ -30,6 +30,10 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
     override lateinit var mContext: AppCompatActivity
     override var cancelable: Boolean = true
 
+    override val layoutRoot: View? by lazy {
+        onCreateRootView()
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context as AppCompatActivity

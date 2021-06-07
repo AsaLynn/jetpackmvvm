@@ -21,6 +21,10 @@ abstract class BaseDialogFragment : RxAppCompatDialogFragment(), IView, IToastVi
 
     override lateinit var mContext: AppCompatActivity
 
+    override val layoutRoot: View? by lazy {
+        onCreateRootView()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, initTheme())

@@ -33,4 +33,6 @@ interface IBaseView : IView, IToastView {
     fun registerEventBus(isRegister: Boolean)
 
     fun onInitImmersionBar()
+
+
 }

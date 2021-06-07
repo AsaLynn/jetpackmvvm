@@ -28,6 +28,10 @@ abstract class BaseActivity : RxAppCompatActivity(), IBaseView,
     override var titleBar: View? = null
     override var usedStatusBarDarkFont: Boolean = false
 
+    override val layoutRoot: View? by lazy {
+        onCreateRootView()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -97,8 +101,8 @@ abstract class BaseActivity : RxAppCompatActivity(), IBaseView,
                 setStatusBarDarkFont()
             } else {
                 ImmersionBar.with(this)
-                        .titleBar(titleBar)
-                        .init()
+                    .titleBar(titleBar)
+                    .init()
             }
         }
     }
@@ -109,10 +113,10 @@ abstract class BaseActivity : RxAppCompatActivity(), IBaseView,
      */
     open fun setStatusBarDarkFont() {
         ImmersionBar.with(this)
-                .statusBarDarkFont(true)
-                .navigationBarDarkIcon(true)
-                .titleBar(titleBar)
-                .init()
+            .statusBarDarkFont(true)
+            .navigationBarDarkIcon(true)
+            .titleBar(titleBar)
+            .init()
     }
 
     /**

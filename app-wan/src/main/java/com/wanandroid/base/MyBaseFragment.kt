@@ -11,7 +11,9 @@ abstract class MyBaseFragment : BaseFragment() {
 
     override val layoutResId: Int = 0
 
-    override val layoutRoot: View?= null
+//    override val layoutRoot: View?= null
+
+    override fun onCreateRootView(): View? = null
 
     override fun lazyLoadData() {
 

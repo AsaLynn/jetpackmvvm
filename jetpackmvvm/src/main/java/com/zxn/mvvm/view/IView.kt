@@ -24,7 +24,7 @@ interface IView {
      */
     var mContext: AppCompatActivity
 
-
+    fun onCreateRootView(): View?
 
     fun onInitView()
 

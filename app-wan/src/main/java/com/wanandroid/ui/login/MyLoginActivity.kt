@@ -3,7 +3,6 @@ package com.wanandroid.ui.login
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -33,7 +32,9 @@ class MyLoginActivity : MyBaseActivity() {
         ActivityMyLoginBinding.inflate(layoutInflater)
     }
 
-    override val layoutRoot: View by lazy { mViewBinding.root }
+//    override val layoutRoot: View by lazy { mViewBinding.root }
+
+    override fun onCreateRootView(): View = mViewBinding.root
 
     override fun onInitView() {
         mViewBinding.loginBt.setOnClickListener {
@@ -67,6 +68,8 @@ class MyLoginActivity : MyBaseActivity() {
             closeLoading()
         }
     }
+
+
 
     override fun showLoading(msg: String?) {
         showProgressDialog()
