@@ -21,6 +21,8 @@ abstract class BaseDialogFragment : RxAppCompatDialogFragment(), IView, IToastVi
 
     override lateinit var mContext: AppCompatActivity
 
+    override val layoutResId: Int = 0
+
     override val layoutRoot: View? by lazy {
         onCreateRootView()
     }
