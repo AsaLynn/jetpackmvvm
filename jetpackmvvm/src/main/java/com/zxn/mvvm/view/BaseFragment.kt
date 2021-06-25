@@ -29,7 +29,7 @@ abstract class BaseFragment : RxFragment(), IBaseView, ILoadingView {
     override var usedEventBus: Boolean = false
     override lateinit var mContext: AppCompatActivity
     override var cancelable: Boolean = true
-
+    override val layoutResId: Int = 0
     override val layoutRoot: View? by lazy {
         onCreateRootView()
     }

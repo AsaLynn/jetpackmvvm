@@ -27,7 +27,7 @@ abstract class BaseActivity : RxAppCompatActivity(), IBaseView,
     override var usedImmersionBar: Boolean = false
     override var titleBar: View? = null
     override var usedStatusBarDarkFont: Boolean = false
-
+    override val layoutResId: Int = 0
     override val layoutRoot: View? by lazy {
         onCreateRootView()
     }
